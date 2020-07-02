@@ -1,3 +1,7 @@
+<a title="Supported Platforms" target="_blank" href="https://github.com/ImVexed/fasturl"><img src="https://img.shields.io/badge/platform-Linux%20%7C%20FreeBSD%20%7C%20Darwin%20%7C%20Windows-549688?style=flat-square&logo=dlna"></a>
+<a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/ImVexed/fasturl"><img src="https://goreportcard.com/badge/github.com/ImVexed/fasturl?style=flat-square"></a>
+<a title="Doc for fasturl" target="_blank" href="https://pkg.go.dev/github.com/ImVexed/fasturl?tab=doc"><img src="https://img.shields.io/badge/go.dev-doc-007d9c?style=flat-square&logo=read-the-docs"></a>
+<a title="fasturl on Sourcegraph" target="_blank" href="https://sourcegraph.com/github.com/ImVexed/fasturl?badge"><img src="https://sourcegraph.com/github.com/ImVexed/fasturl/-/badge.svg?style=flat-square"></a>
 ## Fast URL
 FastURL is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel/) state-machine instead of regex, or the built in standard library `url.Parse`.
 
