@@ -1,13 +1,10 @@
 ## Fast URL
----
 FastURL is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel/) state-machine instead of regex, or the built in standard library `url.Parse`.
 
 ## Why?
----
 *S P E E D*
 
 ## Benchmarks
----
 ## ns/op
 ![](/_images/ns.svg)
 ## B/op
@@ -25,12 +22,10 @@ PASS
 ok      github.com/ImVexed/fasturl      4.405s
 ```
 
----
 ## How does this work?
 Lots of goto's and determinism, feel free to zoom
 ![](/_images/graph.svg)
 
 
 ## Credits
----
 [maximecaron](https://github.com/maximecaron) - Creating the initial ragael parser
