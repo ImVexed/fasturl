@@ -8,6 +8,8 @@ FastURL is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel
 ## Why?
 *S P E E D*
 
+## Examples
+See our [tests](https://github.com/ImVexed/fasturl/blob/master/parser_test.go#L45)
 ## Benchmarks
 ## ns/op
 ![](/_images/ns.svg)
