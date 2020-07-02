@@ -43,6 +43,13 @@ func BenchmarkStd(b *testing.B) {
 }
 
 func TestParseURL(t *testing.T) {
+	t.Run("Fail", func(t *testing.T) {
+		url, err := ParseURL("I'm not a url")
+
+		assert.Error(t, err)
+		assert.Nil(t, url)
+	})
+
 	t.Run("Without HTTP", func(t *testing.T) {
 		url, err := ParseURL("stackoverflow.com/questions/3771081/proper-way-to-check-for-url-equality")
 
