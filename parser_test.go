@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // sample input line from the blog post
@@ -174,5 +175,13 @@ func TestParseURL(t *testing.T) {
 		assert.Equal(t, "80", url.Port)
 		assert.Empty(t, url.Query)
 		assert.Empty(t, url.Fragment)
+	})
+
+	t.Run("With query only", func(t *testing.T) {
+		url, err := ParseURL("http://example.com?foo=bar")
+
+		require.NoError(t, err)
+		assert.Equal(t, "example.com", url.Host)
+		assert.Equal(t, "foo=bar", url.Query)
 	})
 }

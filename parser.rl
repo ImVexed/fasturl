@@ -83,8 +83,8 @@ import "fmt"
   fragment = ( pchar | "/" | "?" )* >mark %save_fragment;
   query = (pchar - "#")* >mark %save_query;
 
-  full_ref = drivepath ( "?" query )? ( "#" fragment )?;
-  relative_ref = path ( "?" query )? ( "#" fragment )?;
+  full_ref = drivepath? ( "?" query )? ( "#" fragment )?;
+  relative_ref = path? ( "?" query )? ( "#" fragment )?;
   absolute_hier_part = ("//")? authority? full_ref?;
   hier_part = ("//")? authority? relative_ref?;
 
