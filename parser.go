@@ -1,5 +1,6 @@
 // Package fasturl is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel/) state-machine instead of regex, or the built in standard library `url.Parse`.
 //
+//line parser.rl:1
 package fasturl
 
 import "fmt"
@@ -48,14 +49,14 @@ func ParseURL(data string) (*URL, error) {
 			goto st_case_0
 		case 46:
 			goto st_case_46
-		case 1:
-			goto st_case_1
-		case 2:
-			goto st_case_2
 		case 47:
 			goto st_case_47
 		case 48:
 			goto st_case_48
+		case 1:
+			goto st_case_1
+		case 2:
+			goto st_case_2
 		case 49:
 			goto st_case_49
 		case 50:
@@ -372,20 +373,24 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto tr14
+		case 35:
+			goto st47
 		case 37:
 			goto tr15
 		case 47:
-			goto tr43
+			goto tr44
 		case 58:
 			goto st8
 		case 61:
 			goto tr14
+		case 63:
+			goto st51
 		case 64:
 			goto st11
 		case 91:
 			goto tr16
 		case 92:
-			goto tr45
+			goto tr47
 		case 95:
 			goto tr14
 		case 126:
@@ -398,10 +403,10 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr44
+				goto tr46
 			}
 		default:
-			goto tr44
+			goto tr46
 		}
 		goto st0
 	st_case_0:
@@ -419,22 +424,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof46
 		}
 	st_case_46:
-//line parser.go:429
+//line parser.go:433
 		switch data[p] {
 		case 33:
 			goto st46
+		case 35:
+			goto tr48
 		case 37:
 			goto st1
 		case 47:
-			goto tr47
+			goto tr50
 		case 58:
-			goto tr48
+			goto tr51
 		case 61:
 			goto st46
+		case 63:
+			goto tr52
 		case 64:
 			goto st11
 		case 92:
-			goto tr47
+			goto tr50
 		case 95:
 			goto st46
 		case 126:
@@ -447,10 +456,106 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr49
+				goto tr53
 			}
 		default:
-			goto tr49
+			goto tr53
+		}
+		goto st0
+	tr48:
+//line parser.rl:27
+
+		u.Host = data[host_mark:p]
+
+		goto st47
+	tr57:
+//line parser.rl:37
+
+		if u.Path == "" {
+			u.Path = data[mark:p]
+		}
+
+		goto st47
+	tr60:
+//line parser.rl:10
+		mark = p
+//line parser.rl:31
+
+		if u.Query == "" {
+			u.Query = data[mark:p]
+		}
+
+		goto st47
+	tr62:
+//line parser.rl:31
+
+		if u.Query == "" {
+			u.Query = data[mark:p]
+		}
+
+		goto st47
+	tr64:
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+		goto st47
+	tr84:
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+//line parser.rl:37
+
+		if u.Path == "" {
+			u.Path = data[mark:p]
+		}
+
+		goto st47
+	tr143:
+//line parser.rl:27
+
+		u.Host = data[host_mark:p]
+
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+		goto st47
+	tr228:
+//line parser.rl:19
+
+		u.Protocol = data[0 : p-1]
+
+		goto st47
+	st47:
+		if p++; p == pe {
+			goto _test_eof47
+		}
+	st_case_47:
+//line parser.go:548
+		if 32 <= data[p] && data[p] <= 126 {
+			goto tr54
+		}
+		goto st0
+	tr54:
+//line parser.rl:10
+		mark = p
+		goto st48
+	st48:
+		if p++; p == pe {
+			goto _test_eof48
+		}
+	st_case_48:
+//line parser.go:562
+		if 32 <= data[p] && data[p] <= 126 {
+			goto st48
 		}
 		goto st0
 	tr15:
@@ -464,7 +569,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof1
 		}
 	st_case_1:
-//line parser.go:474
+//line parser.go:578
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
@@ -496,19 +601,19 @@ func ParseURL(data string) (*URL, error) {
 			goto st46
 		}
 		goto st0
-	tr45:
-//line parser.rl:10
-		mark = p
-		goto st47
 	tr47:
+//line parser.rl:10
+		mark = p
+		goto st49
+	tr50:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
 
 //line parser.rl:10
 		mark = p
-		goto st47
-	tr61:
+		goto st49
+	tr66:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -517,8 +622,8 @@ func ParseURL(data string) (*URL, error) {
 
 //line parser.rl:10
 		mark = p
-		goto st47
-	tr136:
+		goto st49
+	tr145:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -531,91 +636,35 @@ func ParseURL(data string) (*URL, error) {
 
 //line parser.rl:10
 		mark = p
-		goto st47
-	st47:
-		if p++; p == pe {
-			goto _test_eof47
-		}
-	st_case_47:
-//line parser.go:547
-		switch data[p] {
-		case 35:
-			goto tr51
-		case 63:
-			goto tr52
-		}
-		switch {
-		case data[p] > 46:
-			if 48 <= data[p] && data[p] <= 126 {
-				goto st48
-			}
-		case data[p] >= 32:
-			goto st48
-		}
-		goto st0
-	tr78:
-//line parser.rl:13
-
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
-//line parser.rl:10
-		mark = p
-		goto st48
-	st48:
-		if p++; p == pe {
-			goto _test_eof48
-		}
-	st_case_48:
-//line parser.go:578
-		switch data[p] {
-		case 35:
-			goto tr51
-		case 63:
-			goto tr52
-		}
-		if 32 <= data[p] && data[p] <= 126 {
-			goto st48
-		}
-		goto st0
-	tr51:
-//line parser.rl:37
-
-		if u.Path == "" {
-			u.Path = data[mark:p]
-		}
-
-		goto st49
-	tr56:
-//line parser.rl:10
-		mark = p
-//line parser.rl:31
-
-		if u.Query == "" {
-			u.Query = data[mark:p]
-		}
-
-		goto st49
-	tr58:
-//line parser.rl:31
-
-		if u.Query == "" {
-			u.Query = data[mark:p]
-		}
-
 		goto st49
 	st49:
 		if p++; p == pe {
 			goto _test_eof49
 		}
 	st_case_49:
-//line parser.go:620
-		if 32 <= data[p] && data[p] <= 126 {
-			goto tr53
+//line parser.go:651
+		switch data[p] {
+		case 35:
+			goto tr57
+		case 63:
+			goto tr58
+		}
+		switch {
+		case data[p] > 46:
+			if 48 <= data[p] && data[p] <= 126 {
+				goto st50
+			}
+		case data[p] >= 32:
+			goto st50
 		}
 		goto st0
-	tr53:
+	tr86:
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
 //line parser.rl:10
 		mark = p
 		goto st50
@@ -624,12 +673,24 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof50
 		}
 	st_case_50:
-//line parser.go:634
+//line parser.go:682
+		switch data[p] {
+		case 35:
+			goto tr57
+		case 63:
+			goto tr58
+		}
 		if 32 <= data[p] && data[p] <= 126 {
 			goto st50
 		}
 		goto st0
 	tr52:
+//line parser.rl:27
+
+		u.Host = data[host_mark:p]
+
+		goto st51
+	tr58:
 //line parser.rl:37
 
 		if u.Path == "" {
@@ -637,29 +698,69 @@ func ParseURL(data string) (*URL, error) {
 		}
 
 		goto st51
+	tr67:
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+		goto st51
+	tr85:
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+//line parser.rl:37
+
+		if u.Path == "" {
+			u.Path = data[mark:p]
+		}
+
+		goto st51
+	tr147:
+//line parser.rl:27
+
+		u.Host = data[host_mark:p]
+
+//line parser.rl:13
+
+		if port_mark > host_mark {
+			u.Port = data[port_mark:p]
+		}
+
+		goto st51
+	tr232:
+//line parser.rl:19
+
+		u.Protocol = data[0 : p-1]
+
+		goto st51
 	st51:
 		if p++; p == pe {
 			goto _test_eof51
 		}
 	st_case_51:
-//line parser.go:652
+//line parser.go:752
 		if data[p] == 35 {
-			goto tr56
+			goto tr60
 		}
 		switch {
 		case data[p] < 48:
 			if 32 <= data[p] && data[p] <= 46 {
-				goto tr55
+				goto tr59
 			}
 		case data[p] > 62:
 			if 64 <= data[p] && data[p] <= 126 {
-				goto tr55
+				goto tr59
 			}
 		default:
-			goto tr55
+			goto tr59
 		}
 		goto st0
-	tr55:
+	tr59:
 //line parser.rl:10
 		mark = p
 		goto st52
@@ -668,9 +769,9 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof52
 		}
 	st_case_52:
-//line parser.go:678
+//line parser.go:778
 		if data[p] == 35 {
-			goto tr58
+			goto tr62
 		}
 		switch {
 		case data[p] < 48:
@@ -685,7 +786,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st52
 		}
 		goto st0
-	tr48:
+	tr51:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -696,7 +797,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof3
 		}
 	st_case_3:
-//line parser.go:706
+//line parser.go:806
 		switch data[p] {
 		case 33:
 			goto tr4
@@ -748,7 +849,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:11
 		port_mark = p
 		goto st53
-	tr121:
+	tr129:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -758,7 +859,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st53
-	tr201:
+	tr211:
 //line parser.rl:11
 		port_mark = p
 //line parser.rl:13
@@ -775,45 +876,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof53
 		}
 	st_case_53:
-//line parser.go:785
+//line parser.go:885
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st74
 		case 47:
-			goto tr61
-		case 64:
-			goto st54
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr63
+			goto tr69
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st54
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr68
 				}
 			case data[p] >= 32:
 				goto st54
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st54
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st54
 				}
-			default:
-				goto tr62
+			case data[p] >= 97:
+				goto tr68
 			}
 		default:
-			goto tr62
+			goto st54
 		}
 		goto st0
-	tr62:
+	tr68:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -828,45 +927,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof54
 		}
 	st_case_54:
-//line parser.go:838
+//line parser.go:936
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st55
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr72
 				}
 			case data[p] >= 32:
 				goto st55
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st55
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st55
 				}
-			default:
-				goto tr66
+			case data[p] >= 97:
+				goto tr72
 			}
 		default:
-			goto tr66
+			goto st55
 		}
 		goto st0
-	tr66:
+	tr72:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -881,45 +978,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof55
 		}
 	st_case_55:
-//line parser.go:891
+//line parser.go:987
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st56
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr76
 				}
 			case data[p] >= 32:
 				goto st56
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st56
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st56
 				}
-			default:
-				goto tr70
+			case data[p] >= 97:
+				goto tr76
 			}
 		default:
-			goto tr70
+			goto st56
 		}
 		goto st0
-	tr70:
+	tr76:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -929,7 +1024,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st56
-	tr239:
+	tr251:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -948,42 +1043,40 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof56
 		}
 	st_case_56:
-//line parser.go:958
+//line parser.go:1052
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st57
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr79
 				}
 			case data[p] >= 32:
 				goto st57
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st57
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st57
 				}
-			default:
-				goto tr73
+			case data[p] >= 97:
+				goto tr79
 			}
 		default:
-			goto tr73
+			goto st57
 		}
 		goto st0
 	st57:
@@ -992,21 +1085,25 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_57:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr75
+				goto tr81
 			}
 		case data[p] >= 65:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr117:
+	tr125:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1014,7 +1111,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st4
-	tr75:
+	tr81:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1024,7 +1121,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st4
-	tr190:
+	tr200:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1043,7 +1140,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof4
 		}
 	st_case_4:
-//line parser.go:1053
+//line parser.go:1149
 		if data[p] == 58 {
 			goto st5
 		}
@@ -1055,9 +1152,9 @@ func ParseURL(data string) (*URL, error) {
 	st_case_5:
 		switch data[p] {
 		case 47:
-			goto st47
+			goto st49
 		case 92:
-			goto st47
+			goto st49
 		}
 		goto st0
 	st58:
@@ -1066,17 +1163,21 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_58:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr77
+					goto tr83
 				}
 			case data[p] >= 48:
 				goto st6
@@ -1085,13 +1186,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr77
+				goto tr83
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st6:
@@ -1112,7 +1213,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st57
 		}
 		goto st0
-	tr77:
+	tr83:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1127,7 +1228,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof7
 		}
 	st_case_7:
-//line parser.go:1137
+//line parser.go:1237
 		if data[p] == 58 {
 			goto st5
 		}
@@ -1144,7 +1245,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st57
 		}
 		goto st0
-	tr73:
+	tr79:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1154,7 +1255,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st59
-	tr200:
+	tr210:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1173,25 +1274,29 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof59
 		}
 	st_case_59:
-//line parser.go:1183
+//line parser.go:1283
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr75
+				goto tr81
 			}
 		case data[p] >= 65:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr74:
+	tr80:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1201,7 +1306,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st60
-	tr146:
+	tr156:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1220,38 +1325,38 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof60
 		}
 	st_case_60:
-//line parser.go:1230
+//line parser.go:1334
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 47:
-			goto tr61
+			goto tr66
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
-			goto st48
+			goto st50
 		}
 		switch {
 		case data[p] < 93:
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr78
+					goto tr86
 				}
 			case data[p] >= 32:
-				goto st48
+				goto st50
 			}
 		case data[p] > 96:
 			switch {
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
-					goto st48
+					goto st50
 				}
 			case data[p] >= 97:
-				goto tr78
+				goto tr86
 			}
 		default:
-			goto st48
+			goto st50
 		}
 		goto st0
 	st61:
@@ -1260,44 +1365,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_61:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr88
 					}
-				case data[p] >= 48:
-					goto st62
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st62
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -1306,13 +1408,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr80
+				goto tr88
 			}
 		default:
-			goto tr80
+			goto tr79
 		}
 		goto st0
 	st62:
@@ -1321,17 +1423,21 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_62:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr70
+					goto tr76
 				}
 			case data[p] >= 48:
 				goto st56
@@ -1340,16 +1446,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr70
+				goto tr76
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr80:
+	tr88:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1364,21 +1470,25 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof63
 		}
 	st_case_63:
-//line parser.go:1374
+//line parser.go:1479
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr70
+					goto tr76
 				}
 			case data[p] >= 48:
 				goto st56
@@ -1387,16 +1497,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr70
+				goto tr76
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr71:
+	tr77:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1406,7 +1516,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st64
-	tr143:
+	tr153:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1425,16 +1535,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof64
 		}
 	st_case_64:
-//line parser.go:1435
+//line parser.go:1544
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st66
 		case 47:
-			goto tr61
+			goto tr66
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st65
 		}
@@ -1443,7 +1553,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr83
+					goto tr91
 				}
 			case data[p] >= 32:
 				goto st65
@@ -1455,13 +1565,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st65
 				}
 			case data[p] >= 97:
-				goto tr83
+				goto tr91
 			}
 		default:
 			goto st65
 		}
 		goto st0
-	tr83:
+	tr91:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1476,38 +1586,38 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof65
 		}
 	st_case_65:
-//line parser.go:1486
+//line parser.go:1595
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
-			goto st48
+			goto st50
 		}
 		switch {
 		case data[p] < 93:
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr78
+					goto tr86
 				}
 			case data[p] >= 32:
-				goto st48
+				goto st50
 			}
 		case data[p] > 96:
 			switch {
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
-					goto st48
+					goto st50
 				}
 			case data[p] >= 97:
-				goto tr78
+				goto tr86
 			}
 		default:
-			goto st48
+			goto st50
 		}
 		goto st0
 	st66:
@@ -1517,29 +1627,29 @@ func ParseURL(data string) (*URL, error) {
 	st_case_66:
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
-			goto st48
+			goto st50
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] < 48:
 				if 32 <= data[p] && data[p] <= 46 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 57:
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr85
+						goto tr93
 					}
 				case data[p] >= 58:
-					goto st48
+					goto st50
 				}
 			default:
 				goto st67
@@ -1548,25 +1658,25 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] < 97:
 				if 93 <= data[p] && data[p] <= 96 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 102:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto st48
+						goto st50
 					}
 				case data[p] >= 103:
-					goto tr78
+					goto tr86
 				}
 			default:
-				goto tr85
+				goto tr93
 			}
 		default:
-			goto tr78
+			goto tr86
 		}
 		goto st0
-	tr85:
+	tr93:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1581,23 +1691,23 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof67
 		}
 	st_case_67:
-//line parser.go:1591
+//line parser.go:1700
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr57
 		case 63:
-			goto tr52
+			goto tr58
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] < 48:
 				if 32 <= data[p] && data[p] <= 47 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 57:
 				if 58 <= data[p] && data[p] <= 64 {
-					goto st48
+					goto st50
 				}
 			default:
 				goto st65
@@ -1606,11 +1716,11 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] < 97:
 				if 71 <= data[p] && data[p] <= 96 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 126 {
-					goto st48
+					goto st50
 				}
 			default:
 				goto st65
@@ -1625,44 +1735,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_68:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr95
 					}
-				case data[p] >= 48:
-					goto st69
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st69
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -1671,16 +1778,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr87
+				goto tr95
 			}
 		default:
-			goto tr87
+			goto tr76
 		}
 		goto st0
-	tr87:
+	tr95:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1695,46 +1802,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof69
 		}
 	st_case_69:
-//line parser.go:1705
+//line parser.go:1811
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr72
 					}
-				case data[p] >= 48:
-					goto st55
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st55
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -1743,16 +1847,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr66
+				goto tr72
 			}
 		default:
-			goto tr66
+			goto tr79
 		}
 		goto st0
-	tr67:
+	tr73:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1762,7 +1866,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st70
-	tr139:
+	tr149:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -1781,16 +1885,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof70
 		}
 	st_case_70:
-//line parser.go:1791
+//line parser.go:1894
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st72
 		case 47:
-			goto tr61
+			goto tr66
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st71
 		}
@@ -1799,7 +1903,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr90
+					goto tr98
 				}
 			case data[p] >= 32:
 				goto st71
@@ -1811,13 +1915,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st71
 				}
 			case data[p] >= 97:
-				goto tr90
+				goto tr98
 			}
 		default:
 			goto st71
 		}
 		goto st0
-	tr90:
+	tr98:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1832,16 +1936,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof71
 		}
 	st_case_71:
-//line parser.go:1842
+//line parser.go:1945
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st66
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st65
 		}
@@ -1850,7 +1954,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr83
+					goto tr91
 				}
 			case data[p] >= 32:
 				goto st65
@@ -1862,7 +1966,7 @@ func ParseURL(data string) (*URL, error) {
 					goto st65
 				}
 			case data[p] >= 97:
-				goto tr83
+				goto tr91
 			}
 		default:
 			goto st65
@@ -1875,13 +1979,13 @@ func ParseURL(data string) (*URL, error) {
 	st_case_72:
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st66
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st65
 		}
@@ -1896,7 +2000,7 @@ func ParseURL(data string) (*URL, error) {
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr92
+						goto tr100
 					}
 				case data[p] >= 58:
 					goto st65
@@ -1917,16 +2021,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st65
 					}
 				case data[p] >= 103:
-					goto tr83
+					goto tr91
 				}
 			default:
-				goto tr92
+				goto tr100
 			}
 		default:
-			goto tr83
+			goto tr91
 		}
 		goto st0
-	tr92:
+	tr100:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -1941,32 +2045,32 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof73
 		}
 	st_case_73:
-//line parser.go:1951
+//line parser.go:2054
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
-			goto st48
+			goto st50
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] < 48:
 				if 32 <= data[p] && data[p] <= 46 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 57:
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr90
+						goto tr98
 					}
 				case data[p] >= 58:
-					goto st48
+					goto st50
 				}
 			default:
 				goto st71
@@ -1975,22 +2079,22 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] < 97:
 				if 93 <= data[p] && data[p] <= 96 {
-					goto st48
+					goto st50
 				}
 			case data[p] > 102:
 				switch {
 				case data[p] > 122:
 					if 123 <= data[p] && data[p] <= 126 {
-						goto st48
+						goto st50
 					}
 				case data[p] >= 103:
-					goto tr78
+					goto tr86
 				}
 			default:
-				goto tr90
+				goto tr98
 			}
 		default:
-			goto tr78
+			goto tr86
 		}
 		goto st0
 	st74:
@@ -1999,44 +2103,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_74:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr102
 					}
-				case data[p] >= 48:
-					goto st75
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st75
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -2045,16 +2146,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr94
+				goto tr102
 			}
 		default:
-			goto tr94
+			goto tr72
 		}
 		goto st0
-	tr94:
+	tr102:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2069,46 +2170,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof75
 		}
 	st_case_75:
-//line parser.go:2079
+//line parser.go:2179
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr68
 					}
-				case data[p] >= 48:
-					goto st54
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st54
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -2117,16 +2215,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr62
+				goto tr68
 			}
 		default:
-			goto tr62
+			goto tr76
 		}
 		goto st0
-	tr63:
+	tr69:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2136,7 +2234,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st76
-	tr227:
+	tr239:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -2155,16 +2253,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof76
 		}
 	st_case_76:
-//line parser.go:2165
+//line parser.go:2262
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st78
 		case 47:
-			goto tr61
+			goto tr66
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st77
 		}
@@ -2173,7 +2271,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr97
+					goto tr105
 				}
 			case data[p] >= 32:
 				goto st77
@@ -2185,13 +2283,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st77
 				}
 			case data[p] >= 97:
-				goto tr97
+				goto tr105
 			}
 		default:
 			goto st77
 		}
 		goto st0
-	tr97:
+	tr105:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2206,16 +2304,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof77
 		}
 	st_case_77:
-//line parser.go:2216
+//line parser.go:2313
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st72
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st71
 		}
@@ -2224,7 +2322,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr90
+					goto tr98
 				}
 			case data[p] >= 32:
 				goto st71
@@ -2236,7 +2334,7 @@ func ParseURL(data string) (*URL, error) {
 					goto st71
 				}
 			case data[p] >= 97:
-				goto tr90
+				goto tr98
 			}
 		default:
 			goto st71
@@ -2249,13 +2347,13 @@ func ParseURL(data string) (*URL, error) {
 	st_case_78:
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st72
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st71
 		}
@@ -2270,7 +2368,7 @@ func ParseURL(data string) (*URL, error) {
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr99
+						goto tr107
 					}
 				case data[p] >= 58:
 					goto st71
@@ -2291,16 +2389,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st71
 					}
 				case data[p] >= 103:
-					goto tr90
+					goto tr98
 				}
 			default:
-				goto tr99
+				goto tr107
 			}
 		default:
-			goto tr90
+			goto tr98
 		}
 		goto st0
-	tr99:
+	tr107:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2315,16 +2413,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof79
 		}
 	st_case_79:
-//line parser.go:2325
+//line parser.go:2422
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st66
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st65
 		}
@@ -2339,7 +2437,7 @@ func ParseURL(data string) (*URL, error) {
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr97
+						goto tr105
 					}
 				case data[p] >= 58:
 					goto st65
@@ -2360,20 +2458,20 @@ func ParseURL(data string) (*URL, error) {
 						goto st65
 					}
 				case data[p] >= 103:
-					goto tr83
+					goto tr91
 				}
 			default:
-				goto tr97
+				goto tr105
 			}
 		default:
-			goto tr83
+			goto tr91
 		}
 		goto st0
 	tr4:
 //line parser.rl:11
 		port_mark = p
 		goto st80
-	tr129:
+	tr137:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2383,7 +2481,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st80
-	tr150:
+	tr160:
 //line parser.rl:11
 		port_mark = p
 //line parser.rl:13
@@ -2395,7 +2493,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st80
-	tr220:
+	tr231:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -2408,22 +2506,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof80
 		}
 	st_case_80:
-//line parser.go:2418
+//line parser.go:2515
 		switch data[p] {
 		case 33:
 			goto st81
+		case 35:
+			goto tr64
 		case 37:
 			goto st142
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto st54
 		case 62:
 			goto st54
+		case 63:
+			goto tr67
 		case 64:
 			goto st119
 		case 92:
-			goto tr63
+			goto tr69
 		case 95:
 			goto st81
 		case 126:
@@ -2450,13 +2552,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st54
 				}
 			default:
-				goto tr103
+				goto tr111
 			}
 		default:
-			goto tr103
+			goto tr111
 		}
 		goto st0
-	tr103:
+	tr111:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2471,22 +2573,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof81
 		}
 	st_case_81:
-//line parser.go:2481
+//line parser.go:2582
 		switch data[p] {
 		case 33:
 			goto st82
+		case 35:
+			goto tr64
 		case 37:
 			goto st140
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto st55
 		case 62:
 			goto st55
+		case 63:
+			goto tr67
 		case 64:
 			goto st112
 		case 92:
-			goto tr67
+			goto tr73
 		case 95:
 			goto st82
 		case 126:
@@ -2513,13 +2619,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st55
 				}
 			default:
-				goto tr107
+				goto tr115
 			}
 		default:
-			goto tr107
+			goto tr115
 		}
 		goto st0
-	tr107:
+	tr115:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2534,22 +2640,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof82
 		}
 	st_case_82:
-//line parser.go:2544
+//line parser.go:2649
 		switch data[p] {
 		case 33:
 			goto st83
+		case 35:
+			goto tr64
 		case 37:
 			goto st137
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto st56
 		case 62:
 			goto st56
+		case 63:
+			goto tr67
 		case 64:
 			goto st108
 		case 92:
-			goto tr71
+			goto tr77
 		case 95:
 			goto st83
 		case 126:
@@ -2576,13 +2686,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st56
 				}
 			default:
-				goto tr111
+				goto tr119
 			}
 		default:
-			goto tr111
+			goto tr119
 		}
 		goto st0
-	tr111:
+	tr119:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -2597,22 +2707,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof83
 		}
 	st_case_83:
-//line parser.go:2607
+//line parser.go:2716
 		switch data[p] {
 		case 33:
 			goto st84
+		case 35:
+			goto tr64
 		case 37:
 			goto st88
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto st57
 		case 62:
 			goto st57
+		case 63:
+			goto tr67
 		case 64:
 			goto st89
 		case 92:
-			goto tr74
+			goto tr80
 		case 95:
 			goto st84
 		case 126:
@@ -2639,10 +2753,10 @@ func ParseURL(data string) (*URL, error) {
 					goto st57
 				}
 			default:
-				goto tr114
+				goto tr122
 			}
 		default:
-			goto tr114
+			goto tr122
 		}
 		goto st0
 	st84:
@@ -2653,16 +2767,20 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto st8
+		case 35:
+			goto tr64
 		case 37:
 			goto st9
 		case 47:
-			goto tr61
+			goto tr66
 		case 61:
 			goto st8
+		case 63:
+			goto tr67
 		case 64:
 			goto st11
 		case 92:
-			goto tr61
+			goto tr66
 		case 95:
 			goto st8
 		case 126:
@@ -2675,10 +2793,10 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr115
+				goto tr123
 			}
 		default:
-			goto tr115
+			goto tr123
 		}
 		goto st0
 	st8:
@@ -2806,7 +2924,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof12
 		}
 	st_case_12:
-//line parser.go:2816
+//line parser.go:2933
 		if data[p] == 118 {
 			goto st28
 		}
@@ -2963,23 +3081,27 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_85:
 		switch data[p] {
+		case 35:
+			goto tr48
 		case 47:
-			goto tr47
+			goto tr50
 		case 58:
-			goto tr116
+			goto tr124
+		case 63:
+			goto tr52
 		case 92:
-			goto tr47
+			goto tr50
 		}
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr117
+				goto tr125
 			}
 		case data[p] >= 65:
-			goto tr117
+			goto tr125
 		}
 		goto st0
-	tr116:
+	tr124:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -2990,7 +3112,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof23
 		}
 	st_case_23:
-//line parser.go:3000
+//line parser.go:3121
 		if data[p] == 37 {
 			goto tr31
 		}
@@ -3021,46 +3143,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof86
 		}
 	st_case_86:
-//line parser.go:3031
+//line parser.go:3152
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st74
 		case 47:
-			goto tr61
-		case 64:
-			goto st54
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr63
+			goto tr69
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st54
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st54
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr127
 					}
-				case data[p] >= 48:
-					goto st87
+				case data[p] >= 58:
+					goto st54
 				}
 			default:
-				goto st54
+				goto st87
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st54
-					}
-				case data[p] >= 71:
-					goto tr62
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st54
 				}
 			case data[p] > 102:
 				switch {
@@ -3069,16 +3188,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st54
 					}
 				case data[p] >= 103:
-					goto tr62
+					goto tr68
 				}
 			default:
-				goto tr119
+				goto tr127
 			}
 		default:
-			goto tr119
+			goto tr68
 		}
 		goto st0
-	tr119:
+	tr127:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3093,46 +3212,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof87
 		}
 	st_case_87:
-//line parser.go:3103
+//line parser.go:3221
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr129
 					}
-				case data[p] >= 48:
-					goto st53
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st53
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -3141,13 +3257,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr121
+				goto tr129
 			}
 		default:
-			goto tr121
+			goto tr72
 		}
 		goto st0
 	st24:
@@ -3303,7 +3419,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st31
 		}
 		goto st0
-	tr115:
+	tr123:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3318,7 +3434,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof32
 		}
 	st_case_32:
-//line parser.go:3328
+//line parser.go:3443
 		switch data[p] {
 		case 33:
 			goto st8
@@ -3364,13 +3480,13 @@ func ParseURL(data string) (*URL, error) {
 		case 37:
 			goto st9
 		case 47:
-			goto st47
+			goto st49
 		case 61:
 			goto st8
 		case 64:
 			goto st11
 		case 92:
-			goto st47
+			goto st49
 		case 95:
 			goto st8
 		case 126:
@@ -3395,17 +3511,21 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_88:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr123
+					goto tr131
 				}
 			case data[p] >= 48:
 				goto st34
@@ -3414,13 +3534,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr123
+				goto tr131
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st34:
@@ -3441,7 +3561,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st84
 		}
 		goto st0
-	tr123:
+	tr131:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3456,7 +3576,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof35
 		}
 	st_case_35:
-//line parser.go:3466
+//line parser.go:3585
 		if data[p] == 58 {
 			goto st5
 		}
@@ -3481,20 +3601,24 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto tr14
+		case 35:
+			goto tr64
 		case 37:
 			goto tr15
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st8
 		case 61:
 			goto tr14
+		case 63:
+			goto tr67
 		case 64:
 			goto st11
 		case 91:
 			goto tr16
 		case 92:
-			goto tr61
+			goto tr66
 		case 95:
 			goto tr14
 		case 126:
@@ -3507,13 +3631,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr124
+				goto tr132
 			}
 		default:
-			goto tr124
+			goto tr132
 		}
 		goto st0
-	tr49:
+	tr53:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -3521,7 +3645,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st90
-	tr124:
+	tr132:
 //line parser.rl:23
 
 		host_mark = p
@@ -3535,7 +3659,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st90
-	tr147:
+	tr157:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -3549,7 +3673,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st90
-	tr213:
+	tr223:
 //line parser.rl:23
 
 		host_mark = p
@@ -3562,22 +3686,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof90
 		}
 	st_case_90:
-//line parser.go:3572
+//line parser.go:3695
 		switch data[p] {
 		case 33:
 			goto st46
+		case 35:
+			goto tr48
 		case 37:
 			goto st1
 		case 47:
-			goto tr47
+			goto tr50
 		case 58:
-			goto tr125
+			goto tr133
 		case 61:
 			goto st46
+		case 63:
+			goto tr52
 		case 64:
 			goto st11
 		case 92:
-			goto tr47
+			goto tr50
 		case 95:
 			goto st46
 		case 126:
@@ -3590,13 +3718,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr49
+				goto tr53
 			}
 		default:
-			goto tr49
+			goto tr53
 		}
 		goto st0
-	tr125:
+	tr133:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -3607,14 +3735,14 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof36
 		}
 	st_case_36:
-//line parser.go:3617
+//line parser.go:3744
 		switch data[p] {
 		case 33:
 			goto tr4
 		case 37:
 			goto tr5
 		case 47:
-			goto st47
+			goto st49
 		case 60:
 			goto tr3
 		case 62:
@@ -3664,46 +3792,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof91
 		}
 	st_case_91:
-//line parser.go:3674
+//line parser.go:3801
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st74
 		case 47:
-			goto tr61
-		case 64:
-			goto st54
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr63
+			goto tr69
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st54
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st54
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr135
 					}
-				case data[p] >= 48:
-					goto st92
+				case data[p] >= 58:
+					goto st54
 				}
 			default:
-				goto st54
+				goto st92
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st54
-					}
-				case data[p] >= 71:
-					goto tr62
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st54
 				}
 			case data[p] > 102:
 				switch {
@@ -3712,16 +3837,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st54
 					}
 				case data[p] >= 103:
-					goto tr62
+					goto tr68
 				}
 			default:
-				goto tr127
+				goto tr135
 			}
 		default:
-			goto tr127
+			goto tr68
 		}
 		goto st0
-	tr127:
+	tr135:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3736,46 +3861,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof92
 		}
 	st_case_92:
-//line parser.go:3746
+//line parser.go:3870
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr137
 					}
-				case data[p] >= 48:
-					goto st80
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st80
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -3784,20 +3906,20 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr129
+				goto tr137
 			}
 		default:
-			goto tr129
+			goto tr72
 		}
 		goto st0
 	tr6:
 //line parser.rl:11
 		port_mark = p
 		goto st93
-	tr221:
+	tr233:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -3810,37 +3932,41 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof93
 		}
 	st_case_93:
-//line parser.go:3820
+//line parser.go:3941
 		switch data[p] {
 		case 33:
-			goto tr130
+			goto tr138
+		case 35:
+			goto tr64
 		case 37:
-			goto tr131
+			goto tr139
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st81
 		case 60:
 			goto st54
 		case 62:
 			goto st54
+		case 63:
+			goto tr67
 		case 64:
 			goto st119
 		case 91:
-			goto tr133
+			goto tr141
 		case 92:
-			goto tr63
+			goto tr69
 		case 95:
-			goto tr130
+			goto tr138
 		case 126:
-			goto tr130
+			goto tr138
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] > 34:
 				if 36 <= data[p] && data[p] <= 61 {
-					goto tr130
+					goto tr138
 				}
 			case data[p] >= 32:
 				goto st54
@@ -3856,19 +3982,19 @@ func ParseURL(data string) (*URL, error) {
 					goto st54
 				}
 			default:
-				goto tr132
+				goto tr140
 			}
 		default:
-			goto tr132
+			goto tr140
 		}
 		goto st0
-	tr130:
+	tr138:
 //line parser.rl:23
 
 		host_mark = p
 
 		goto st94
-	tr180:
+	tr190:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3878,7 +4004,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st94
-	tr132:
+	tr140:
 //line parser.rl:23
 
 		host_mark = p
@@ -3892,7 +4018,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st94
-	tr226:
+	tr238:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -3911,24 +4037,28 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof94
 		}
 	st_case_94:
-//line parser.go:3921
+//line parser.go:4046
 		switch data[p] {
 		case 33:
 			goto st95
+		case 35:
+			goto tr143
 		case 37:
 			goto st110
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr137
+			goto tr146
 		case 60:
 			goto st55
 		case 62:
 			goto st55
+		case 63:
+			goto tr147
 		case 64:
 			goto st112
 		case 92:
-			goto tr139
+			goto tr149
 		case 95:
 			goto st95
 		case 126:
@@ -3955,19 +4085,19 @@ func ParseURL(data string) (*URL, error) {
 					goto st55
 				}
 			default:
-				goto tr138
+				goto tr148
 			}
 		default:
-			goto tr138
+			goto tr148
 		}
 		goto st0
-	tr181:
+	tr191:
 //line parser.rl:23
 
 		host_mark = p
 
 		goto st95
-	tr168:
+	tr178:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -3977,7 +4107,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st95
-	tr183:
+	tr193:
 //line parser.rl:23
 
 		host_mark = p
@@ -3991,7 +4121,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st95
-	tr138:
+	tr148:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -4010,24 +4140,28 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof95
 		}
 	st_case_95:
-//line parser.go:4020
+//line parser.go:4149
 		switch data[p] {
 		case 33:
 			goto st96
+		case 35:
+			goto tr143
 		case 37:
 			goto st105
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr137
+			goto tr146
 		case 60:
 			goto st56
 		case 62:
 			goto st56
+		case 63:
+			goto tr147
 		case 64:
 			goto st108
 		case 92:
-			goto tr143
+			goto tr153
 		case 95:
 			goto st96
 		case 126:
@@ -4054,19 +4188,19 @@ func ParseURL(data string) (*URL, error) {
 					goto st56
 				}
 			default:
-				goto tr142
+				goto tr152
 			}
 		default:
-			goto tr142
+			goto tr152
 		}
 		goto st0
+	tr179:
+//line parser.rl:23
+
+		host_mark = p
+
+		goto st96
 	tr169:
-//line parser.rl:23
-
-		host_mark = p
-
-		goto st96
-	tr159:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4076,7 +4210,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st96
-	tr171:
+	tr181:
 //line parser.rl:23
 
 		host_mark = p
@@ -4090,7 +4224,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st96
-	tr142:
+	tr152:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -4109,24 +4243,28 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof96
 		}
 	st_case_96:
-//line parser.go:4119
+//line parser.go:4252
 		switch data[p] {
 		case 33:
 			goto st97
+		case 35:
+			goto tr143
 		case 37:
 			goto st98
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr137
+			goto tr146
 		case 60:
 			goto st57
 		case 62:
 			goto st57
+		case 63:
+			goto tr147
 		case 64:
 			goto st89
 		case 92:
-			goto tr146
+			goto tr156
 		case 95:
 			goto st97
 		case 126:
@@ -4153,13 +4291,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st57
 				}
 			default:
-				goto tr145
+				goto tr155
 			}
 		default:
-			goto tr145
+			goto tr155
 		}
 		goto st0
-	tr160:
+	tr170:
 //line parser.rl:23
 
 		host_mark = p
@@ -4170,22 +4308,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof97
 		}
 	st_case_97:
-//line parser.go:4180
+//line parser.go:4317
 		switch data[p] {
 		case 33:
 			goto st46
+		case 35:
+			goto tr143
 		case 37:
 			goto st1
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr48
+			goto tr51
 		case 61:
 			goto st46
+		case 63:
+			goto tr147
 		case 64:
 			goto st11
 		case 92:
-			goto tr136
+			goto tr145
 		case 95:
 			goto st46
 		case 126:
@@ -4198,13 +4340,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr147
+				goto tr157
 			}
 		default:
-			goto tr147
+			goto tr157
 		}
 		goto st0
-	tr161:
+	tr171:
 //line parser.rl:23
 
 		host_mark = p
@@ -4215,19 +4357,23 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof98
 		}
 	st_case_98:
-//line parser.go:4225
+//line parser.go:4366
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr149
+					goto tr159
 				}
 			case data[p] >= 48:
 				goto st37
@@ -4236,13 +4382,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr149
+				goto tr159
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st37:
@@ -4263,7 +4409,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st97
 		}
 		goto st0
-	tr149:
+	tr159:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4278,7 +4424,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof38
 		}
 	st_case_38:
-//line parser.go:4288
+//line parser.go:4433
 		if data[p] == 58 {
 			goto st5
 		}
@@ -4295,7 +4441,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st97
 		}
 		goto st0
-	tr137:
+	tr146:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -4306,22 +4452,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof99
 		}
 	st_case_99:
-//line parser.go:4316
+//line parser.go:4461
 		switch data[p] {
 		case 33:
 			goto tr4
+		case 35:
+			goto tr64
 		case 37:
 			goto tr5
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto tr3
 		case 62:
 			goto tr3
+		case 63:
+			goto tr67
 		case 64:
 			goto tr6
 		case 92:
-			goto tr151
+			goto tr161
 		case 95:
 			goto tr4
 		case 126:
@@ -4348,17 +4498,17 @@ func ParseURL(data string) (*URL, error) {
 					goto tr3
 				}
 			default:
-				goto tr150
+				goto tr160
 			}
 		default:
-			goto tr150
+			goto tr160
 		}
 		goto st0
 	tr39:
 //line parser.rl:11
 		port_mark = p
 		goto st100
-	tr151:
+	tr161:
 //line parser.rl:11
 		port_mark = p
 //line parser.rl:13
@@ -4370,7 +4520,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st100
-	tr224:
+	tr236:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -4385,16 +4535,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof100
 		}
 	st_case_100:
-//line parser.go:4395
+//line parser.go:4544
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st102
 		case 47:
-			goto tr61
+			goto tr66
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st101
 		}
@@ -4403,7 +4553,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr154
+					goto tr164
 				}
 			case data[p] >= 32:
 				goto st101
@@ -4415,13 +4565,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st101
 				}
 			case data[p] >= 97:
-				goto tr154
+				goto tr164
 			}
 		default:
 			goto st101
 		}
 		goto st0
-	tr154:
+	tr164:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4436,16 +4586,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof101
 		}
 	st_case_101:
-//line parser.go:4446
+//line parser.go:4595
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st78
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st77
 		}
@@ -4454,7 +4604,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 64:
 				if 65 <= data[p] && data[p] <= 92 {
-					goto tr97
+					goto tr105
 				}
 			case data[p] >= 32:
 				goto st77
@@ -4466,7 +4616,7 @@ func ParseURL(data string) (*URL, error) {
 					goto st77
 				}
 			case data[p] >= 97:
-				goto tr97
+				goto tr105
 			}
 		default:
 			goto st77
@@ -4479,13 +4629,13 @@ func ParseURL(data string) (*URL, error) {
 	st_case_102:
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st78
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st77
 		}
@@ -4500,7 +4650,7 @@ func ParseURL(data string) (*URL, error) {
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr156
+						goto tr166
 					}
 				case data[p] >= 58:
 					goto st77
@@ -4521,16 +4671,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st77
 					}
 				case data[p] >= 103:
-					goto tr97
+					goto tr105
 				}
 			default:
-				goto tr156
+				goto tr166
 			}
 		default:
-			goto tr97
+			goto tr105
 		}
 		goto st0
-	tr156:
+	tr166:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4545,16 +4695,16 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof103
 		}
 	st_case_103:
-//line parser.go:4555
+//line parser.go:4704
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr84
 		case 37:
 			goto st72
 		case 47:
-			goto tr78
+			goto tr86
 		case 63:
-			goto tr52
+			goto tr85
 		case 91:
 			goto st71
 		}
@@ -4569,7 +4719,7 @@ func ParseURL(data string) (*URL, error) {
 				switch {
 				case data[p] > 64:
 					if 65 <= data[p] && data[p] <= 70 {
-						goto tr154
+						goto tr164
 					}
 				case data[p] >= 58:
 					goto st71
@@ -4590,16 +4740,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st71
 					}
 				case data[p] >= 103:
-					goto tr90
+					goto tr98
 				}
 			default:
-				goto tr154
+				goto tr164
 			}
 		default:
-			goto tr90
+			goto tr98
 		}
 		goto st0
-	tr162:
+	tr172:
 //line parser.rl:23
 
 		host_mark = p
@@ -4613,7 +4763,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st104
-	tr145:
+	tr155:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -4632,22 +4782,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof104
 		}
 	st_case_104:
-//line parser.go:4642
+//line parser.go:4791
 		switch data[p] {
 		case 33:
 			goto st46
+		case 35:
+			goto tr143
 		case 37:
 			goto st1
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr125
+			goto tr133
 		case 61:
 			goto st46
+		case 63:
+			goto tr147
 		case 64:
 			goto st11
 		case 92:
-			goto tr136
+			goto tr145
 		case 95:
 			goto st46
 		case 126:
@@ -4660,13 +4814,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr147
+				goto tr157
 			}
 		default:
-			goto tr147
+			goto tr157
 		}
 		goto st0
-	tr170:
+	tr180:
 //line parser.rl:23
 
 		host_mark = p
@@ -4677,46 +4831,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof105
 		}
 	st_case_105:
-//line parser.go:4687
+//line parser.go:4840
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr168
 					}
-				case data[p] >= 48:
-					goto st106
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st106
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -4725,13 +4876,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr158
+				goto tr168
 			}
 		default:
-			goto tr158
+			goto tr79
 		}
 		goto st0
 	st106:
@@ -4740,17 +4891,21 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_106:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr159
+					goto tr169
 				}
 			case data[p] >= 48:
 				goto st96
@@ -4759,16 +4914,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr159
+				goto tr169
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr158:
+	tr168:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4783,21 +4938,25 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof107
 		}
 	st_case_107:
-//line parser.go:4793
+//line parser.go:4947
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr159
+					goto tr169
 				}
 			case data[p] >= 48:
 				goto st96
@@ -4806,13 +4965,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr159
+				goto tr169
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st108:
@@ -4822,34 +4981,38 @@ func ParseURL(data string) (*URL, error) {
 	st_case_108:
 		switch data[p] {
 		case 33:
-			goto tr160
+			goto tr170
+		case 35:
+			goto tr64
 		case 37:
-			goto tr161
+			goto tr171
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st84
 		case 60:
 			goto st57
 		case 62:
 			goto st57
+		case 63:
+			goto tr67
 		case 64:
 			goto st89
 		case 91:
-			goto tr163
+			goto tr173
 		case 92:
-			goto tr74
+			goto tr80
 		case 95:
-			goto tr160
+			goto tr170
 		case 126:
-			goto tr160
+			goto tr170
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] > 34:
 				if 36 <= data[p] && data[p] <= 61 {
-					goto tr160
+					goto tr170
 				}
 			case data[p] >= 32:
 				goto st57
@@ -4865,13 +5028,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st57
 				}
 			default:
-				goto tr162
+				goto tr172
 			}
 		default:
-			goto tr162
+			goto tr172
 		}
 		goto st0
-	tr163:
+	tr173:
 //line parser.rl:23
 
 		host_mark = p
@@ -4882,21 +5045,25 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof109
 		}
 	st_case_109:
-//line parser.go:4892
+//line parser.go:5054
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 118:
-			goto tr165
+			goto tr175
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 58:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr164
+					goto tr174
 				}
 			case data[p] >= 48:
 				goto st13
@@ -4905,16 +5072,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr164
+				goto tr174
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr164:
+	tr174:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4929,7 +5096,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof39
 		}
 	st_case_39:
-//line parser.go:4939
+//line parser.go:5105
 		switch data[p] {
 		case 58:
 			goto st40
@@ -4956,11 +5123,11 @@ func ParseURL(data string) (*URL, error) {
 	st_case_40:
 		switch data[p] {
 		case 47:
-			goto st47
+			goto st49
 		case 58:
 			goto st13
 		case 92:
-			goto st47
+			goto st49
 		case 93:
 			goto st85
 		}
@@ -4977,7 +5144,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st13
 		}
 		goto st0
-	tr165:
+	tr175:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -4992,7 +5159,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof41
 		}
 	st_case_41:
-//line parser.go:5002
+//line parser.go:5168
 		if data[p] == 58 {
 			goto st5
 		}
@@ -5009,7 +5176,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st29
 		}
 		goto st0
-	tr182:
+	tr192:
 //line parser.rl:23
 
 		host_mark = p
@@ -5020,46 +5187,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof110
 		}
 	st_case_110:
-//line parser.go:5030
+//line parser.go:5196
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr177
 					}
-				case data[p] >= 48:
-					goto st111
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st111
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -5068,16 +5232,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr167
+				goto tr177
 			}
 		default:
-			goto tr167
+			goto tr76
 		}
 		goto st0
-	tr167:
+	tr177:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5092,46 +5256,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof111
 		}
 	st_case_111:
-//line parser.go:5102
+//line parser.go:5265
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr178
 					}
-				case data[p] >= 48:
-					goto st95
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st95
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -5140,13 +5301,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr168
+				goto tr178
 			}
 		default:
-			goto tr168
+			goto tr79
 		}
 		goto st0
 	st112:
@@ -5156,34 +5317,38 @@ func ParseURL(data string) (*URL, error) {
 	st_case_112:
 		switch data[p] {
 		case 33:
-			goto tr169
+			goto tr179
+		case 35:
+			goto tr64
 		case 37:
-			goto tr170
+			goto tr180
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st83
 		case 60:
 			goto st56
 		case 62:
 			goto st56
+		case 63:
+			goto tr67
 		case 64:
 			goto st108
 		case 91:
-			goto tr172
+			goto tr182
 		case 92:
-			goto tr71
+			goto tr77
 		case 95:
-			goto tr169
+			goto tr179
 		case 126:
-			goto tr169
+			goto tr179
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] > 34:
 				if 36 <= data[p] && data[p] <= 61 {
-					goto tr169
+					goto tr179
 				}
 			case data[p] >= 32:
 				goto st56
@@ -5199,13 +5364,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st56
 				}
 			default:
-				goto tr171
+				goto tr181
 			}
 		default:
-			goto tr171
+			goto tr181
 		}
 		goto st0
-	tr172:
+	tr182:
 //line parser.rl:23
 
 		host_mark = p
@@ -5216,48 +5381,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof113
 		}
 	st_case_113:
-//line parser.go:5226
+//line parser.go:5390
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		case 118:
-			goto tr175
+			goto tr185
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 58:
 				switch {
-				case data[p] > 58:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr184
 					}
-				case data[p] >= 48:
-					goto st114
+				case data[p] >= 59:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st114
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -5266,13 +5428,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr174
+				goto tr184
 			}
 		default:
-			goto tr174
+			goto tr79
 		}
 		goto st0
 	st114:
@@ -5281,12 +5443,16 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_114:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st13
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 93:
 			goto st85
 		}
@@ -5295,7 +5461,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr164
+					goto tr174
 				}
 			case data[p] >= 48:
 				goto st14
@@ -5304,16 +5470,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr164
+				goto tr174
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr174:
+	tr184:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5328,14 +5494,18 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof115
 		}
 	st_case_115:
-//line parser.go:5338
+//line parser.go:5503
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st40
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 93:
 			goto st85
 		}
@@ -5344,7 +5514,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr164
+					goto tr174
 				}
 			case data[p] >= 48:
 				goto st14
@@ -5353,16 +5523,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr164
+				goto tr174
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr175:
+	tr185:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5377,21 +5547,25 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof116
 		}
 	st_case_116:
-//line parser.go:5387
+//line parser.go:5556
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr176
+					goto tr186
 				}
 			case data[p] >= 48:
 				goto st29
@@ -5400,16 +5574,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr176
+				goto tr186
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr176:
+	tr186:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5424,7 +5598,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof42
 		}
 	st_case_42:
-//line parser.go:5434
+//line parser.go:5607
 		switch data[p] {
 		case 46:
 			goto st30
@@ -5444,7 +5618,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st29
 		}
 		goto st0
-	tr131:
+	tr139:
 //line parser.rl:23
 
 		host_mark = p
@@ -5455,46 +5629,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof117
 		}
 	st_case_117:
-//line parser.go:5465
+//line parser.go:5638
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr188
 					}
-				case data[p] >= 48:
-					goto st118
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st118
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -5503,16 +5674,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr178
+				goto tr188
 			}
 		default:
-			goto tr178
+			goto tr72
 		}
 		goto st0
-	tr178:
+	tr188:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5527,46 +5698,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof118
 		}
 	st_case_118:
-//line parser.go:5537
+//line parser.go:5707
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr190
 					}
-				case data[p] >= 48:
-					goto st94
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st94
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -5575,13 +5743,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr180
+				goto tr190
 			}
 		default:
-			goto tr180
+			goto tr76
 		}
 		goto st0
 	st119:
@@ -5591,34 +5759,38 @@ func ParseURL(data string) (*URL, error) {
 	st_case_119:
 		switch data[p] {
 		case 33:
-			goto tr181
+			goto tr191
+		case 35:
+			goto tr64
 		case 37:
-			goto tr182
+			goto tr192
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st82
 		case 60:
 			goto st55
 		case 62:
 			goto st55
+		case 63:
+			goto tr67
 		case 64:
 			goto st112
 		case 91:
-			goto tr184
+			goto tr194
 		case 92:
-			goto tr67
+			goto tr73
 		case 95:
-			goto tr181
+			goto tr191
 		case 126:
-			goto tr181
+			goto tr191
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] > 34:
 				if 36 <= data[p] && data[p] <= 61 {
-					goto tr181
+					goto tr191
 				}
 			case data[p] >= 32:
 				goto st55
@@ -5634,13 +5806,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st55
 				}
 			default:
-				goto tr183
+				goto tr193
 			}
 		default:
-			goto tr183
+			goto tr193
 		}
 		goto st0
-	tr184:
+	tr194:
 //line parser.rl:23
 
 		host_mark = p
@@ -5651,48 +5823,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof120
 		}
 	st_case_120:
-//line parser.go:5661
+//line parser.go:5832
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		case 118:
-			goto tr187
+			goto tr197
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 58:
 				switch {
-				case data[p] > 58:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr196
 					}
-				case data[p] >= 48:
-					goto st121
+				case data[p] >= 59:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st121
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -5701,16 +5870,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr186
+				goto tr196
 			}
 		default:
-			goto tr186
+			goto tr76
 		}
 		goto st0
-	tr186:
+	tr196:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5725,50 +5894,47 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof121
 		}
 	st_case_121:
-//line parser.go:5735
+//line parser.go:5903
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st114
-		case 64:
-			goto st57
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		case 93:
 			goto st123
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr184
 					}
-				case data[p] >= 48:
-					goto st122
+				case data[p] >= 59:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st122
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -5777,13 +5943,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr174
+				goto tr184
 			}
 		default:
-			goto tr174
+			goto tr79
 		}
 		goto st0
 	st122:
@@ -5792,14 +5958,18 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_122:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 46:
 			goto st15
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st13
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 93:
 			goto st85
 		}
@@ -5808,7 +5978,7 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr164
+					goto tr174
 				}
 			case data[p] >= 48:
 				goto st14
@@ -5817,13 +5987,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr164
+				goto tr174
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st123:
@@ -5832,23 +6002,27 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_123:
 		switch data[p] {
+		case 35:
+			goto tr143
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr116
+			goto tr124
+		case 63:
+			goto tr147
 		case 92:
-			goto tr136
+			goto tr145
 		}
 		switch {
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr190
+				goto tr200
 			}
 		case data[p] >= 65:
-			goto tr190
+			goto tr200
 		}
 		goto st0
-	tr187:
+	tr197:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5863,46 +6037,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof124
 		}
 	st_case_124:
-//line parser.go:5873
+//line parser.go:6046
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr202
 					}
-				case data[p] >= 48:
-					goto st125
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st125
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -5911,13 +6082,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr192
+				goto tr202
 			}
 		default:
-			goto tr192
+			goto tr79
 		}
 		goto st0
 	st125:
@@ -5926,19 +6097,23 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_125:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 46:
 			goto st30
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr176
+					goto tr186
 				}
 			case data[p] >= 48:
 				goto st29
@@ -5947,16 +6122,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr176
+				goto tr186
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr192:
+	tr202:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -5971,23 +6146,27 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof126
 		}
 	st_case_126:
-//line parser.go:5981
+//line parser.go:6155
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 46:
 			goto st30
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr176
+					goto tr186
 				}
 			case data[p] >= 48:
 				goto st29
@@ -5996,16 +6175,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr176
+				goto tr186
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr133:
+	tr141:
 //line parser.rl:23
 
 		host_mark = p
@@ -6016,48 +6195,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof127
 		}
 	st_case_127:
-//line parser.go:6026
+//line parser.go:6204
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		case 118:
-			goto tr195
+			goto tr205
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 58:
 				switch {
-				case data[p] > 58:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr204
 					}
-				case data[p] >= 48:
-					goto st128
+				case data[p] >= 59:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st128
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -6066,16 +6242,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr194
+				goto tr204
 			}
 		default:
-			goto tr194
+			goto tr72
 		}
 		goto st0
-	tr194:
+	tr204:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6090,50 +6266,47 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof128
 		}
 	st_case_128:
-//line parser.go:6100
+//line parser.go:6275
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st121
-		case 64:
-			goto st56
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		case 93:
 			goto st131
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr196
 					}
-				case data[p] >= 48:
-					goto st129
+				case data[p] >= 59:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st129
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -6142,13 +6315,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr186
+				goto tr196
 			}
 		default:
-			goto tr186
+			goto tr76
 		}
 		goto st0
 	st129:
@@ -6157,50 +6330,47 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_129:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 46:
 			goto st130
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st114
-		case 64:
-			goto st57
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		case 93:
 			goto st123
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 45 {
 					goto st57
 				}
-			case data[p] > 45:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr184
 					}
-				case data[p] >= 48:
-					goto st122
+				case data[p] >= 59:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st122
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -6209,13 +6379,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr174
+				goto tr184
 			}
 		default:
-			goto tr174
+			goto tr79
 		}
 		goto st0
 	st130:
@@ -6224,10 +6394,14 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_130:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 65:
@@ -6236,10 +6410,10 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr75
+				goto tr81
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st131:
@@ -6248,45 +6422,43 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_131:
 		switch data[p] {
+		case 35:
+			goto tr143
 		case 37:
 			goto st58
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr199
-		case 64:
-			goto st57
+			goto tr209
+		case 63:
+			goto tr147
 		case 92:
-			goto tr146
+			goto tr156
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st57
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr210
 				}
 			case data[p] >= 32:
 				goto st57
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st57
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st57
 				}
-			default:
-				goto tr200
+			case data[p] >= 97:
+				goto tr210
 			}
 		default:
-			goto tr200
+			goto st57
 		}
 		goto st0
-	tr199:
+	tr209:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -6297,45 +6469,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof132
 		}
 	st_case_132:
-//line parser.go:6307
+//line parser.go:6478
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto tr31
 		case 47:
-			goto tr61
-		case 64:
-			goto tr3
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr151
+			goto tr161
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto tr3
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr211
 				}
 			case data[p] >= 32:
 				goto tr3
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto tr3
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto tr3
 				}
-			default:
-				goto tr201
+			case data[p] >= 97:
+				goto tr211
 			}
 		default:
-			goto tr201
+			goto tr3
 		}
 		goto st0
-	tr195:
+	tr205:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6350,46 +6520,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof133
 		}
 	st_case_133:
-//line parser.go:6360
+//line parser.go:6529
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr213
 					}
-				case data[p] >= 48:
-					goto st134
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st134
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -6398,16 +6565,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr203
+				goto tr213
 			}
 		default:
-			goto tr203
+			goto tr76
 		}
 		goto st0
-	tr203:
+	tr213:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6422,48 +6589,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof134
 		}
 	st_case_134:
-//line parser.go:6432
+//line parser.go:6598
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 46:
 			goto st135
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 45 {
 					goto st57
 				}
-			case data[p] > 45:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr202
 					}
-				case data[p] >= 48:
-					goto st125
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st125
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -6472,13 +6636,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr192
+				goto tr202
 			}
 		default:
-			goto tr192
+			goto tr79
 		}
 		goto st0
 	st135:
@@ -6489,14 +6653,18 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto st31
+		case 35:
+			goto tr64
 		case 36:
 			goto st31
 		case 47:
-			goto tr61
+			goto tr66
 		case 61:
 			goto st31
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 95:
 			goto st31
 		case 126:
@@ -6509,13 +6677,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr205
+				goto tr215
 			}
 		default:
-			goto tr205
+			goto tr215
 		}
 		goto st0
-	tr205:
+	tr215:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6530,7 +6698,7 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof43
 		}
 	st_case_43:
-//line parser.go:6540
+//line parser.go:6707
 		switch data[p] {
 		case 33:
 			goto st31
@@ -6576,11 +6744,11 @@ func ParseURL(data string) (*URL, error) {
 		case 36:
 			goto st31
 		case 47:
-			goto st47
+			goto st49
 		case 61:
 			goto st31
 		case 92:
-			goto st47
+			goto st49
 		case 93:
 			goto st85
 		case 95:
@@ -6601,7 +6769,7 @@ func ParseURL(data string) (*URL, error) {
 			goto st31
 		}
 		goto st0
-	tr114:
+	tr122:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6616,22 +6784,26 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof136
 		}
 	st_case_136:
-//line parser.go:6626
+//line parser.go:6793
 		switch data[p] {
 		case 33:
 			goto st8
+		case 35:
+			goto tr64
 		case 37:
 			goto st9
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st33
 		case 61:
 			goto st8
+		case 63:
+			goto tr67
 		case 64:
 			goto st11
 		case 92:
-			goto tr61
+			goto tr66
 		case 95:
 			goto st8
 		case 126:
@@ -6644,10 +6816,10 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr115
+				goto tr123
 			}
 		default:
-			goto tr115
+			goto tr123
 		}
 		goto st0
 	st137:
@@ -6656,44 +6828,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_137:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr217
 					}
-				case data[p] >= 48:
-					goto st138
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st138
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -6702,13 +6871,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr207
+				goto tr217
 			}
 		default:
-			goto tr207
+			goto tr79
 		}
 		goto st0
 	st138:
@@ -6717,17 +6886,21 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_138:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr111
+					goto tr119
 				}
 			case data[p] >= 48:
 				goto st83
@@ -6736,16 +6909,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr111
+				goto tr119
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
-	tr207:
+	tr217:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6760,21 +6933,25 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof139
 		}
 	st_case_139:
-//line parser.go:6770
+//line parser.go:6942
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st5
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 71:
 			switch {
 			case data[p] > 57:
 				if 65 <= data[p] && data[p] <= 70 {
-					goto tr111
+					goto tr119
 				}
 			case data[p] >= 48:
 				goto st83
@@ -6783,13 +6960,13 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 102:
 				if 103 <= data[p] && data[p] <= 122 {
-					goto tr75
+					goto tr81
 				}
 			case data[p] >= 97:
-				goto tr111
+				goto tr119
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st140:
@@ -6798,44 +6975,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_140:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr219
 					}
-				case data[p] >= 48:
-					goto st141
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st141
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -6844,16 +7018,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr209
+				goto tr219
 			}
 		default:
-			goto tr209
+			goto tr76
 		}
 		goto st0
-	tr209:
+	tr219:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -6868,46 +7042,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof141
 		}
 	st_case_141:
-//line parser.go:6878
+//line parser.go:7051
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st57
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr115
 					}
-				case data[p] >= 48:
-					goto st82
+				case data[p] >= 58:
+					goto st57
 				}
 			default:
-				goto st57
+				goto st82
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st57
-					}
-				case data[p] >= 71:
-					goto tr73
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
 			case data[p] > 102:
 				switch {
@@ -6916,13 +7087,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st57
 					}
 				case data[p] >= 103:
-					goto tr73
+					goto tr79
 				}
 			default:
-				goto tr107
+				goto tr115
 			}
 		default:
-			goto tr107
+			goto tr79
 		}
 		goto st0
 	st142:
@@ -6931,44 +7102,41 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_142:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr221
 					}
-				case data[p] >= 48:
-					goto st143
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st143
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -6977,16 +7145,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr211
+				goto tr221
 			}
 		default:
-			goto tr211
+			goto tr72
 		}
 		goto st0
-	tr211:
+	tr221:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7001,46 +7169,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof143
 		}
 	st_case_143:
-//line parser.go:7011
+//line parser.go:7178
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st56
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr111
 					}
-				case data[p] >= 48:
-					goto st81
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st81
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -7049,20 +7214,20 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr103
+				goto tr111
 			}
 		default:
-			goto tr103
+			goto tr76
 		}
 		goto st0
-	tr43:
+	tr44:
 //line parser.rl:10
 		mark = p
 		goto st144
-	tr219:
+	tr230:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -7075,17 +7240,17 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof144
 		}
 	st_case_144:
-//line parser.go:7085
+//line parser.go:7249
 		switch data[p] {
 		case 35:
-			goto tr51
+			goto tr57
 		case 47:
 			goto st145
 		case 63:
-			goto tr52
+			goto tr58
 		}
 		if 32 <= data[p] && data[p] <= 126 {
-			goto st48
+			goto st50
 		}
 		goto st0
 	st145:
@@ -7096,20 +7261,24 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto tr14
+		case 35:
+			goto st47
 		case 37:
 			goto tr15
 		case 47:
-			goto tr45
+			goto tr47
 		case 58:
 			goto st8
 		case 61:
 			goto tr14
+		case 63:
+			goto st51
 		case 64:
 			goto st11
 		case 91:
 			goto tr16
 		case 92:
-			goto tr45
+			goto tr47
 		case 95:
 			goto tr14
 		case 126:
@@ -7122,13 +7291,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr213
+				goto tr223
 			}
 		default:
-			goto tr213
+			goto tr223
 		}
 		goto st0
-	tr44:
+	tr46:
 //line parser.rl:10
 		mark = p
 //line parser.rl:23
@@ -7136,7 +7305,7 @@ func ParseURL(data string) (*URL, error) {
 		host_mark = p
 
 		goto st146
-	tr216:
+	tr226:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -7149,26 +7318,30 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof146
 		}
 	st_case_146:
-//line parser.go:7159
+//line parser.go:7327
 		switch data[p] {
 		case 33:
 			goto st46
+		case 35:
+			goto tr48
 		case 37:
 			goto st1
 		case 43:
 			goto st146
 		case 47:
-			goto tr47
+			goto tr50
 		case 58:
-			goto tr215
+			goto tr225
 		case 59:
 			goto st46
 		case 61:
 			goto st46
+		case 63:
+			goto tr52
 		case 64:
 			goto st11
 		case 92:
-			goto tr47
+			goto tr50
 		case 95:
 			goto st46
 		case 126:
@@ -7183,16 +7356,16 @@ func ParseURL(data string) (*URL, error) {
 			switch {
 			case data[p] > 90:
 				if 97 <= data[p] && data[p] <= 122 {
-					goto tr216
+					goto tr226
 				}
 			case data[p] >= 65:
-				goto tr216
+				goto tr226
 			}
 		default:
 			goto st146
 		}
 		goto st0
-	tr215:
+	tr225:
 //line parser.rl:27
 
 		u.Host = data[host_mark:p]
@@ -7203,37 +7376,41 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof147
 		}
 	st_case_147:
-//line parser.go:7213
+//line parser.go:7385
 		switch data[p] {
 		case 33:
-			goto tr217
+			goto tr227
+		case 35:
+			goto tr228
 		case 37:
-			goto tr218
+			goto tr229
 		case 47:
-			goto tr219
+			goto tr230
 		case 58:
-			goto tr220
+			goto tr231
 		case 60:
 			goto tr3
 		case 62:
 			goto tr3
+		case 63:
+			goto tr232
 		case 64:
-			goto tr221
+			goto tr233
 		case 91:
-			goto tr223
+			goto tr235
 		case 92:
-			goto tr224
+			goto tr236
 		case 95:
-			goto tr217
+			goto tr227
 		case 126:
-			goto tr217
+			goto tr227
 		}
 		switch {
 		case data[p] < 65:
 			switch {
 			case data[p] > 34:
 				if 36 <= data[p] && data[p] <= 61 {
-					goto tr217
+					goto tr227
 				}
 			case data[p] >= 32:
 				goto tr3
@@ -7249,13 +7426,13 @@ func ParseURL(data string) (*URL, error) {
 					goto tr3
 				}
 			default:
-				goto tr222
+				goto tr234
 			}
 		default:
-			goto tr222
+			goto tr234
 		}
 		goto st0
-	tr231:
+	tr243:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7265,7 +7442,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:10
 		mark = p
 		goto st148
-	tr217:
+	tr227:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -7277,7 +7454,7 @@ func ParseURL(data string) (*URL, error) {
 //line parser.rl:11
 		port_mark = p
 		goto st148
-	tr222:
+	tr234:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -7296,24 +7473,28 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof148
 		}
 	st_case_148:
-//line parser.go:7306
+//line parser.go:7482
 		switch data[p] {
 		case 33:
 			goto st94
+		case 35:
+			goto tr143
 		case 37:
 			goto st117
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr137
+			goto tr146
 		case 60:
 			goto st54
 		case 62:
 			goto st54
+		case 63:
+			goto tr147
 		case 64:
 			goto st119
 		case 92:
-			goto tr227
+			goto tr239
 		case 95:
 			goto st94
 		case 126:
@@ -7340,13 +7521,13 @@ func ParseURL(data string) (*URL, error) {
 					goto st54
 				}
 			default:
-				goto tr226
+				goto tr238
 			}
 		default:
-			goto tr226
+			goto tr238
 		}
 		goto st0
-	tr218:
+	tr229:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -7363,46 +7544,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof149
 		}
 	st_case_149:
-//line parser.go:7373
+//line parser.go:7553
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st74
 		case 47:
-			goto tr61
-		case 64:
-			goto st54
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr63
+			goto tr69
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st54
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st54
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr241
 					}
-				case data[p] >= 48:
-					goto st150
+				case data[p] >= 58:
+					goto st54
 				}
 			default:
-				goto st54
+				goto st150
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st54
-					}
-				case data[p] >= 71:
-					goto tr62
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st54
 				}
 			case data[p] > 102:
 				switch {
@@ -7411,16 +7589,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st54
 					}
 				case data[p] >= 103:
-					goto tr62
+					goto tr68
 				}
 			default:
-				goto tr229
+				goto tr241
 			}
 		default:
-			goto tr229
+			goto tr68
 		}
 		goto st0
-	tr229:
+	tr241:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7435,46 +7613,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof150
 		}
 	st_case_150:
-//line parser.go:7445
+//line parser.go:7622
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr243
 					}
-				case data[p] >= 48:
-					goto st148
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st148
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -7483,16 +7658,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr231
+				goto tr243
 			}
 		default:
-			goto tr231
+			goto tr72
 		}
 		goto st0
-	tr223:
+	tr235:
 //line parser.rl:19
 
 		u.Protocol = data[0 : p-1]
@@ -7509,48 +7684,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof151
 		}
 	st_case_151:
-//line parser.go:7519
+//line parser.go:7693
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st74
 		case 47:
-			goto tr61
-		case 64:
-			goto st54
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr63
+			goto tr69
 		case 118:
-			goto tr234
+			goto tr246
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st54
 				}
-			case data[p] > 46:
+			case data[p] > 58:
 				switch {
-				case data[p] > 58:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st54
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr245
 					}
-				case data[p] >= 48:
-					goto st152
+				case data[p] >= 59:
+					goto st54
 				}
 			default:
-				goto st54
+				goto st152
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st54
-					}
-				case data[p] >= 71:
-					goto tr62
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st54
 				}
 			case data[p] > 102:
 				switch {
@@ -7559,16 +7731,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st54
 					}
 				case data[p] >= 103:
-					goto tr62
+					goto tr68
 				}
 			default:
-				goto tr233
+				goto tr245
 			}
 		default:
-			goto tr233
+			goto tr68
 		}
 		goto st0
-	tr233:
+	tr245:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7583,50 +7755,47 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof152
 		}
 	st_case_152:
-//line parser.go:7593
+//line parser.go:7764
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st128
-		case 64:
-			goto st55
-		case 92:
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		case 93:
 			goto st156
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr204
 					}
-				case data[p] >= 48:
-					goto st153
+				case data[p] >= 59:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st153
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -7635,13 +7804,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr194
+				goto tr204
 			}
 		default:
-			goto tr194
+			goto tr72
 		}
 		goto st0
 	st153:
@@ -7650,50 +7819,47 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_153:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 46:
 			goto st154
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st121
-		case 64:
-			goto st56
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		case 93:
 			goto st131
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 45 {
 					goto st56
 				}
-			case data[p] > 45:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 59 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr196
 					}
-				case data[p] >= 48:
-					goto st129
+				case data[p] >= 59:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st129
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -7702,13 +7868,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr186
+				goto tr196
 			}
 		default:
-			goto tr186
+			goto tr76
 		}
 		goto st0
 	st154:
@@ -7717,49 +7883,46 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_154:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
-		case 64:
-			goto st57
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		}
 		switch {
-		case data[p] < 58:
+		case data[p] < 65:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st57
 				}
-			case data[p] > 46:
-				if 48 <= data[p] && data[p] <= 57 {
-					goto st155
+			case data[p] > 57:
+				if 58 <= data[p] && data[p] <= 64 {
+					goto st57
 				}
 			default:
-				goto st57
+				goto st155
 			}
-		case data[p] > 62:
+		case data[p] > 90:
 			switch {
-			case data[p] < 91:
-				if 65 <= data[p] && data[p] <= 90 {
-					goto tr73
+			case data[p] < 97:
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st57
 				}
-			case data[p] > 96:
-				switch {
-				case data[p] > 122:
-					if 123 <= data[p] && data[p] <= 126 {
-						goto st57
-					}
-				case data[p] >= 97:
-					goto tr73
+			case data[p] > 122:
+				if 123 <= data[p] && data[p] <= 126 {
+					goto st57
 				}
 			default:
-				goto st57
+				goto tr79
 			}
 		default:
-			goto st57
+			goto tr79
 		}
 		goto st0
 	st155:
@@ -7768,12 +7931,16 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_155:
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 46:
 			goto st17
 		case 47:
-			goto tr61
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		}
 		switch {
 		case data[p] < 65:
@@ -7782,10 +7949,10 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr75
+				goto tr81
 			}
 		default:
-			goto tr75
+			goto tr81
 		}
 		goto st0
 	st156:
@@ -7794,45 +7961,43 @@ func ParseURL(data string) (*URL, error) {
 		}
 	st_case_156:
 		switch data[p] {
+		case 35:
+			goto tr143
 		case 37:
 			goto st61
 		case 47:
-			goto tr136
+			goto tr145
 		case 58:
-			goto tr199
-		case 64:
-			goto st56
+			goto tr209
+		case 63:
+			goto tr147
 		case 92:
-			goto tr143
+			goto tr153
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 91:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 62 {
-					goto st56
+			case data[p] > 64:
+				if 65 <= data[p] && data[p] <= 90 {
+					goto tr251
 				}
 			case data[p] >= 32:
 				goto st56
 			}
-		case data[p] > 90:
+		case data[p] > 96:
 			switch {
-			case data[p] < 97:
-				if 91 <= data[p] && data[p] <= 96 {
-					goto st56
-				}
 			case data[p] > 122:
 				if 123 <= data[p] && data[p] <= 126 {
 					goto st56
 				}
-			default:
-				goto tr239
+			case data[p] >= 97:
+				goto tr251
 			}
 		default:
-			goto tr239
+			goto st56
 		}
 		goto st0
-	tr234:
+	tr246:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7847,46 +8012,43 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof157
 		}
 	st_case_157:
-//line parser.go:7857
+//line parser.go:8021
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st68
 		case 47:
-			goto tr61
-		case 64:
-			goto st55
-		case 92:
+			goto tr66
+		case 63:
 			goto tr67
+		case 92:
+			goto tr73
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 46 {
 					goto st55
 				}
-			case data[p] > 46:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st55
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr253
 					}
-				case data[p] >= 48:
-					goto st158
+				case data[p] >= 58:
+					goto st55
 				}
 			default:
-				goto st55
+				goto st158
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st55
-					}
-				case data[p] >= 71:
-					goto tr66
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st55
 				}
 			case data[p] > 102:
 				switch {
@@ -7895,16 +8057,16 @@ func ParseURL(data string) (*URL, error) {
 						goto st55
 					}
 				case data[p] >= 103:
-					goto tr66
+					goto tr72
 				}
 			default:
-				goto tr241
+				goto tr253
 			}
 		default:
-			goto tr241
+			goto tr72
 		}
 		goto st0
-	tr241:
+	tr253:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -7919,48 +8081,45 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof158
 		}
 	st_case_158:
-//line parser.go:7929
+//line parser.go:8090
 		switch data[p] {
+		case 35:
+			goto tr64
 		case 37:
 			goto st61
 		case 46:
 			goto st159
 		case 47:
-			goto tr61
-		case 64:
-			goto st56
+			goto tr66
+		case 63:
+			goto tr67
 		case 92:
-			goto tr71
+			goto tr77
 		}
 		switch {
-		case data[p] < 65:
+		case data[p] < 71:
 			switch {
-			case data[p] < 36:
-				if 32 <= data[p] && data[p] <= 34 {
+			case data[p] < 48:
+				if 32 <= data[p] && data[p] <= 45 {
 					goto st56
 				}
-			case data[p] > 45:
+			case data[p] > 57:
 				switch {
-				case data[p] > 57:
-					if 58 <= data[p] && data[p] <= 62 {
-						goto st56
+				case data[p] > 64:
+					if 65 <= data[p] && data[p] <= 70 {
+						goto tr213
 					}
-				case data[p] >= 48:
-					goto st134
+				case data[p] >= 58:
+					goto st56
 				}
 			default:
-				goto st56
+				goto st134
 			}
-		case data[p] > 70:
+		case data[p] > 90:
 			switch {
 			case data[p] < 97:
-				switch {
-				case data[p] > 90:
-					if 91 <= data[p] && data[p] <= 96 {
-						goto st56
-					}
-				case data[p] >= 71:
-					goto tr70
+				if 91 <= data[p] && data[p] <= 96 {
+					goto st56
 				}
 			case data[p] > 102:
 				switch {
@@ -7969,13 +8128,13 @@ func ParseURL(data string) (*URL, error) {
 						goto st56
 					}
 				case data[p] >= 103:
-					goto tr70
+					goto tr76
 				}
 			default:
-				goto tr203
+				goto tr213
 			}
 		default:
-			goto tr203
+			goto tr76
 		}
 		goto st0
 	st159:
@@ -7986,18 +8145,18 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto st160
+		case 35:
+			goto tr64
 		case 37:
 			goto st58
 		case 47:
-			goto tr61
+			goto tr66
 		case 60:
 			goto st57
-		case 62:
-			goto st57
-		case 64:
-			goto st57
+		case 63:
+			goto tr67
 		case 92:
-			goto tr74
+			goto tr80
 		case 95:
 			goto st160
 		case 126:
@@ -8006,12 +8165,16 @@ func ParseURL(data string) (*URL, error) {
 		switch {
 		case data[p] < 65:
 			switch {
-			case data[p] > 34:
-				if 36 <= data[p] && data[p] <= 61 {
-					goto st160
+			case data[p] < 36:
+				if 32 <= data[p] && data[p] <= 34 {
+					goto st57
 				}
-			case data[p] >= 32:
-				goto st57
+			case data[p] > 61:
+				if 62 <= data[p] && data[p] <= 64 {
+					goto st57
+				}
+			default:
+				goto st160
 			}
 		case data[p] > 90:
 			switch {
@@ -8024,10 +8187,10 @@ func ParseURL(data string) (*URL, error) {
 					goto st57
 				}
 			default:
-				goto tr244
+				goto tr256
 			}
 		default:
-			goto tr244
+			goto tr256
 		}
 		goto st0
 	st160:
@@ -8038,14 +8201,18 @@ func ParseURL(data string) (*URL, error) {
 		switch data[p] {
 		case 33:
 			goto st31
+		case 35:
+			goto tr64
 		case 36:
 			goto st31
 		case 47:
-			goto tr61
+			goto tr66
 		case 61:
 			goto st31
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 93:
 			goto st85
 		case 95:
@@ -8060,13 +8227,13 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr205
+				goto tr215
 			}
 		default:
-			goto tr205
+			goto tr215
 		}
 		goto st0
-	tr244:
+	tr256:
 //line parser.rl:13
 
 		if port_mark > host_mark {
@@ -8081,20 +8248,24 @@ func ParseURL(data string) (*URL, error) {
 			goto _test_eof161
 		}
 	st_case_161:
-//line parser.go:8091
+//line parser.go:8257
 		switch data[p] {
 		case 33:
 			goto st31
+		case 35:
+			goto tr64
 		case 36:
 			goto st31
 		case 47:
-			goto tr61
+			goto tr66
 		case 58:
 			goto st44
 		case 61:
 			goto st31
+		case 63:
+			goto tr67
 		case 92:
-			goto tr61
+			goto tr66
 		case 93:
 			goto st85
 		case 95:
@@ -8109,27 +8280,27 @@ func ParseURL(data string) (*URL, error) {
 			}
 		case data[p] > 90:
 			if 97 <= data[p] && data[p] <= 122 {
-				goto tr205
+				goto tr215
 			}
 		default:
-			goto tr205
+			goto tr215
 		}
 		goto st0
 	st_out:
 	_test_eof46:
 		cs = 46
 		goto _test_eof
-	_test_eof1:
-		cs = 1
-		goto _test_eof
-	_test_eof2:
-		cs = 2
-		goto _test_eof
 	_test_eof47:
 		cs = 47
 		goto _test_eof
 	_test_eof48:
 		cs = 48
+		goto _test_eof
+	_test_eof1:
+		cs = 1
+		goto _test_eof
+	_test_eof2:
+		cs = 2
 		goto _test_eof
 	_test_eof49:
 		cs = 49
@@ -8626,14 +8797,14 @@ func ParseURL(data string) (*URL, error) {
 					u.Query = data[mark:p]
 				}
 
-			case 47, 48, 67, 144:
+			case 49, 50, 67, 144:
 //line parser.rl:37
 
 				if u.Path == "" {
 					u.Path = data[mark:p]
 				}
 
-			case 50:
+			case 48:
 //line parser.rl:43
 
 				u.Fragment = data[mark:p]
@@ -8647,7 +8818,7 @@ func ParseURL(data string) (*URL, error) {
 					u.Query = data[mark:p]
 				}
 
-			case 49:
+			case 47:
 //line parser.rl:10
 				mark = p
 //line parser.rl:43
@@ -8678,7 +8849,7 @@ func ParseURL(data string) (*URL, error) {
 					u.Port = data[port_mark:p]
 				}
 
-//line parser.go:8366
+//line parser.go:8536
 			}
 		}
 
