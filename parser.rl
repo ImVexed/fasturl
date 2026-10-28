@@ -81,7 +81,7 @@ import "fmt"
   authority   =  ( userinfo "@" )? (host >mark_host %save_host) ( ":" port >mark_port %save_port)?;
 
   fragment = ( pchar | "/" | "?" )* >mark %save_fragment;
-  query = (pchar - "#")* >mark %save_query;
+  query = ((pchar - "#") | "/" | "?")* >mark %save_query;
 
   full_ref = drivepath? ( "?" query )? ( "#" fragment )?;
   relative_ref = path? ( "?" query )? ( "#" fragment )?;

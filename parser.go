@@ -1,374 +1,379 @@
-// Package fasturl is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel/) state-machine instead of regex, or the built in standard library `url.Parse`.
-//
+
 //line parser.rl:1
+// Package fasturl is a Go URL parser using a [Ragel](http://www.colm.net/open-source/ragel/) state-machine instead of regex, or the built in standard library `url.Parse`.
+// 
 package fasturl
 
 import "fmt"
 
-//line parser.go:11
+
+//line parser.go:9
 const url_parser_start int = 45
 const url_parser_first_final int = 45
 const url_parser_error int = 0
 
 const url_parser_en_main int = 45
 
+
 //line parser.rl:96
+
 
 // URL represents the different parts of a parsed URL
 type URL struct {
-	Protocol string
-	Host     string
-	Port     string
-	Path     string
-	Query    string
-	Fragment string
+  Protocol string
+  Host     string
+  Port     string
+  Path     string
+  Query    string
+  Fragment string
 }
 
 // ParseURL parses a given URL and returns a `URL` representing the different parts
-func ParseURL(data string) (*URL, error) {
-	mark, host_mark, port_mark, cs, p, pe, eof := 0, 0, 0, url_parser_en_main, 0, len(data), len(data)
+func ParseURL(data string) (*URL, error){
+  mark, host_mark, port_mark, cs, p, pe, eof := 0, 0, 0, url_parser_en_main, 0, len(data), len(data)
 
-	u := &URL{}
-
-//line parser.go:39
+  u := &URL{}
+  
+  
+//line parser.go:35
 	{
-		cs = url_parser_start
+	cs = url_parser_start
 	}
 
 //line parser.rl:115
-
-//line parser.go:46
+  
+//line parser.go:40
 	{
-		if p == pe {
-			goto _test_eof
-		}
-		switch cs {
-		case 45:
-			goto st_case_45
-		case 0:
-			goto st_case_0
-		case 46:
-			goto st_case_46
-		case 47:
-			goto st_case_47
-		case 48:
-			goto st_case_48
-		case 1:
-			goto st_case_1
-		case 2:
-			goto st_case_2
-		case 49:
-			goto st_case_49
-		case 50:
-			goto st_case_50
-		case 51:
-			goto st_case_51
-		case 52:
-			goto st_case_52
-		case 3:
-			goto st_case_3
-		case 53:
-			goto st_case_53
-		case 54:
-			goto st_case_54
-		case 55:
-			goto st_case_55
-		case 56:
-			goto st_case_56
-		case 57:
-			goto st_case_57
-		case 4:
-			goto st_case_4
-		case 5:
-			goto st_case_5
-		case 58:
-			goto st_case_58
-		case 6:
-			goto st_case_6
-		case 7:
-			goto st_case_7
-		case 59:
-			goto st_case_59
-		case 60:
-			goto st_case_60
-		case 61:
-			goto st_case_61
-		case 62:
-			goto st_case_62
-		case 63:
-			goto st_case_63
-		case 64:
-			goto st_case_64
-		case 65:
-			goto st_case_65
-		case 66:
-			goto st_case_66
-		case 67:
-			goto st_case_67
-		case 68:
-			goto st_case_68
-		case 69:
-			goto st_case_69
-		case 70:
-			goto st_case_70
-		case 71:
-			goto st_case_71
-		case 72:
-			goto st_case_72
-		case 73:
-			goto st_case_73
-		case 74:
-			goto st_case_74
-		case 75:
-			goto st_case_75
-		case 76:
-			goto st_case_76
-		case 77:
-			goto st_case_77
-		case 78:
-			goto st_case_78
-		case 79:
-			goto st_case_79
-		case 80:
-			goto st_case_80
-		case 81:
-			goto st_case_81
-		case 82:
-			goto st_case_82
-		case 83:
-			goto st_case_83
-		case 84:
-			goto st_case_84
-		case 8:
-			goto st_case_8
-		case 9:
-			goto st_case_9
-		case 10:
-			goto st_case_10
-		case 11:
-			goto st_case_11
-		case 12:
-			goto st_case_12
-		case 13:
-			goto st_case_13
-		case 14:
-			goto st_case_14
-		case 15:
-			goto st_case_15
-		case 16:
-			goto st_case_16
-		case 17:
-			goto st_case_17
-		case 18:
-			goto st_case_18
-		case 19:
-			goto st_case_19
-		case 20:
-			goto st_case_20
-		case 21:
-			goto st_case_21
-		case 22:
-			goto st_case_22
-		case 85:
-			goto st_case_85
-		case 23:
-			goto st_case_23
-		case 86:
-			goto st_case_86
-		case 87:
-			goto st_case_87
-		case 24:
-			goto st_case_24
-		case 25:
-			goto st_case_25
-		case 26:
-			goto st_case_26
-		case 27:
-			goto st_case_27
-		case 28:
-			goto st_case_28
-		case 29:
-			goto st_case_29
-		case 30:
-			goto st_case_30
-		case 31:
-			goto st_case_31
-		case 32:
-			goto st_case_32
-		case 33:
-			goto st_case_33
-		case 88:
-			goto st_case_88
-		case 34:
-			goto st_case_34
-		case 35:
-			goto st_case_35
-		case 89:
-			goto st_case_89
-		case 90:
-			goto st_case_90
-		case 36:
-			goto st_case_36
-		case 91:
-			goto st_case_91
-		case 92:
-			goto st_case_92
-		case 93:
-			goto st_case_93
-		case 94:
-			goto st_case_94
-		case 95:
-			goto st_case_95
-		case 96:
-			goto st_case_96
-		case 97:
-			goto st_case_97
-		case 98:
-			goto st_case_98
-		case 37:
-			goto st_case_37
-		case 38:
-			goto st_case_38
-		case 99:
-			goto st_case_99
-		case 100:
-			goto st_case_100
-		case 101:
-			goto st_case_101
-		case 102:
-			goto st_case_102
-		case 103:
-			goto st_case_103
-		case 104:
-			goto st_case_104
-		case 105:
-			goto st_case_105
-		case 106:
-			goto st_case_106
-		case 107:
-			goto st_case_107
-		case 108:
-			goto st_case_108
-		case 109:
-			goto st_case_109
-		case 39:
-			goto st_case_39
-		case 40:
-			goto st_case_40
-		case 41:
-			goto st_case_41
-		case 110:
-			goto st_case_110
-		case 111:
-			goto st_case_111
-		case 112:
-			goto st_case_112
-		case 113:
-			goto st_case_113
-		case 114:
-			goto st_case_114
-		case 115:
-			goto st_case_115
-		case 116:
-			goto st_case_116
-		case 42:
-			goto st_case_42
-		case 117:
-			goto st_case_117
-		case 118:
-			goto st_case_118
-		case 119:
-			goto st_case_119
-		case 120:
-			goto st_case_120
-		case 121:
-			goto st_case_121
-		case 122:
-			goto st_case_122
-		case 123:
-			goto st_case_123
-		case 124:
-			goto st_case_124
-		case 125:
-			goto st_case_125
-		case 126:
-			goto st_case_126
-		case 127:
-			goto st_case_127
-		case 128:
-			goto st_case_128
-		case 129:
-			goto st_case_129
-		case 130:
-			goto st_case_130
-		case 131:
-			goto st_case_131
-		case 132:
-			goto st_case_132
-		case 133:
-			goto st_case_133
-		case 134:
-			goto st_case_134
-		case 135:
-			goto st_case_135
-		case 43:
-			goto st_case_43
-		case 44:
-			goto st_case_44
-		case 136:
-			goto st_case_136
-		case 137:
-			goto st_case_137
-		case 138:
-			goto st_case_138
-		case 139:
-			goto st_case_139
-		case 140:
-			goto st_case_140
-		case 141:
-			goto st_case_141
-		case 142:
-			goto st_case_142
-		case 143:
-			goto st_case_143
-		case 144:
-			goto st_case_144
-		case 145:
-			goto st_case_145
-		case 146:
-			goto st_case_146
-		case 147:
-			goto st_case_147
-		case 148:
-			goto st_case_148
-		case 149:
-			goto st_case_149
-		case 150:
-			goto st_case_150
-		case 151:
-			goto st_case_151
-		case 152:
-			goto st_case_152
-		case 153:
-			goto st_case_153
-		case 154:
-			goto st_case_154
-		case 155:
-			goto st_case_155
-		case 156:
-			goto st_case_156
-		case 157:
-			goto st_case_157
-		case 158:
-			goto st_case_158
-		case 159:
-			goto st_case_159
-		case 160:
-			goto st_case_160
-		case 161:
-			goto st_case_161
-		}
-		goto st_out
+	if p == pe {
+		goto _test_eof
+	}
+	switch cs {
+	case 45:
+		goto st_case_45
+	case 0:
+		goto st_case_0
+	case 46:
+		goto st_case_46
+	case 47:
+		goto st_case_47
+	case 48:
+		goto st_case_48
+	case 1:
+		goto st_case_1
+	case 2:
+		goto st_case_2
+	case 49:
+		goto st_case_49
+	case 50:
+		goto st_case_50
+	case 51:
+		goto st_case_51
+	case 52:
+		goto st_case_52
+	case 3:
+		goto st_case_3
+	case 53:
+		goto st_case_53
+	case 54:
+		goto st_case_54
+	case 55:
+		goto st_case_55
+	case 56:
+		goto st_case_56
+	case 57:
+		goto st_case_57
+	case 4:
+		goto st_case_4
+	case 5:
+		goto st_case_5
+	case 58:
+		goto st_case_58
+	case 6:
+		goto st_case_6
+	case 7:
+		goto st_case_7
+	case 59:
+		goto st_case_59
+	case 60:
+		goto st_case_60
+	case 61:
+		goto st_case_61
+	case 62:
+		goto st_case_62
+	case 63:
+		goto st_case_63
+	case 64:
+		goto st_case_64
+	case 65:
+		goto st_case_65
+	case 66:
+		goto st_case_66
+	case 67:
+		goto st_case_67
+	case 68:
+		goto st_case_68
+	case 69:
+		goto st_case_69
+	case 70:
+		goto st_case_70
+	case 71:
+		goto st_case_71
+	case 72:
+		goto st_case_72
+	case 73:
+		goto st_case_73
+	case 74:
+		goto st_case_74
+	case 75:
+		goto st_case_75
+	case 76:
+		goto st_case_76
+	case 77:
+		goto st_case_77
+	case 78:
+		goto st_case_78
+	case 79:
+		goto st_case_79
+	case 80:
+		goto st_case_80
+	case 81:
+		goto st_case_81
+	case 82:
+		goto st_case_82
+	case 83:
+		goto st_case_83
+	case 84:
+		goto st_case_84
+	case 8:
+		goto st_case_8
+	case 9:
+		goto st_case_9
+	case 10:
+		goto st_case_10
+	case 11:
+		goto st_case_11
+	case 12:
+		goto st_case_12
+	case 13:
+		goto st_case_13
+	case 14:
+		goto st_case_14
+	case 15:
+		goto st_case_15
+	case 16:
+		goto st_case_16
+	case 17:
+		goto st_case_17
+	case 18:
+		goto st_case_18
+	case 19:
+		goto st_case_19
+	case 20:
+		goto st_case_20
+	case 21:
+		goto st_case_21
+	case 22:
+		goto st_case_22
+	case 85:
+		goto st_case_85
+	case 23:
+		goto st_case_23
+	case 86:
+		goto st_case_86
+	case 87:
+		goto st_case_87
+	case 24:
+		goto st_case_24
+	case 25:
+		goto st_case_25
+	case 26:
+		goto st_case_26
+	case 27:
+		goto st_case_27
+	case 28:
+		goto st_case_28
+	case 29:
+		goto st_case_29
+	case 30:
+		goto st_case_30
+	case 31:
+		goto st_case_31
+	case 32:
+		goto st_case_32
+	case 33:
+		goto st_case_33
+	case 88:
+		goto st_case_88
+	case 34:
+		goto st_case_34
+	case 35:
+		goto st_case_35
+	case 89:
+		goto st_case_89
+	case 90:
+		goto st_case_90
+	case 36:
+		goto st_case_36
+	case 91:
+		goto st_case_91
+	case 92:
+		goto st_case_92
+	case 93:
+		goto st_case_93
+	case 94:
+		goto st_case_94
+	case 95:
+		goto st_case_95
+	case 96:
+		goto st_case_96
+	case 97:
+		goto st_case_97
+	case 98:
+		goto st_case_98
+	case 37:
+		goto st_case_37
+	case 38:
+		goto st_case_38
+	case 99:
+		goto st_case_99
+	case 100:
+		goto st_case_100
+	case 101:
+		goto st_case_101
+	case 102:
+		goto st_case_102
+	case 103:
+		goto st_case_103
+	case 104:
+		goto st_case_104
+	case 105:
+		goto st_case_105
+	case 106:
+		goto st_case_106
+	case 107:
+		goto st_case_107
+	case 108:
+		goto st_case_108
+	case 109:
+		goto st_case_109
+	case 39:
+		goto st_case_39
+	case 40:
+		goto st_case_40
+	case 41:
+		goto st_case_41
+	case 110:
+		goto st_case_110
+	case 111:
+		goto st_case_111
+	case 112:
+		goto st_case_112
+	case 113:
+		goto st_case_113
+	case 114:
+		goto st_case_114
+	case 115:
+		goto st_case_115
+	case 116:
+		goto st_case_116
+	case 42:
+		goto st_case_42
+	case 117:
+		goto st_case_117
+	case 118:
+		goto st_case_118
+	case 119:
+		goto st_case_119
+	case 120:
+		goto st_case_120
+	case 121:
+		goto st_case_121
+	case 122:
+		goto st_case_122
+	case 123:
+		goto st_case_123
+	case 124:
+		goto st_case_124
+	case 125:
+		goto st_case_125
+	case 126:
+		goto st_case_126
+	case 127:
+		goto st_case_127
+	case 128:
+		goto st_case_128
+	case 129:
+		goto st_case_129
+	case 130:
+		goto st_case_130
+	case 131:
+		goto st_case_131
+	case 132:
+		goto st_case_132
+	case 133:
+		goto st_case_133
+	case 134:
+		goto st_case_134
+	case 135:
+		goto st_case_135
+	case 43:
+		goto st_case_43
+	case 44:
+		goto st_case_44
+	case 136:
+		goto st_case_136
+	case 137:
+		goto st_case_137
+	case 138:
+		goto st_case_138
+	case 139:
+		goto st_case_139
+	case 140:
+		goto st_case_140
+	case 141:
+		goto st_case_141
+	case 142:
+		goto st_case_142
+	case 143:
+		goto st_case_143
+	case 144:
+		goto st_case_144
+	case 145:
+		goto st_case_145
+	case 146:
+		goto st_case_146
+	case 147:
+		goto st_case_147
+	case 148:
+		goto st_case_148
+	case 149:
+		goto st_case_149
+	case 150:
+		goto st_case_150
+	case 151:
+		goto st_case_151
+	case 152:
+		goto st_case_152
+	case 153:
+		goto st_case_153
+	case 154:
+		goto st_case_154
+	case 155:
+		goto st_case_155
+	case 156:
+		goto st_case_156
+	case 157:
+		goto st_case_157
+	case 158:
+		goto st_case_158
+	case 159:
+		goto st_case_159
+	case 160:
+		goto st_case_160
+	case 161:
+		goto st_case_161
+	}
+	goto st_out
 	st_case_45:
 		switch data[p] {
 		case 33:
@@ -409,22 +414,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr46
 		}
 		goto st0
-	st_case_0:
+st_case_0:
 	st0:
 		cs = 0
 		goto _out
-	tr14:
+tr14:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st46
+    host_mark = p;
+  
+	goto st46
 	st46:
 		if p++; p == pe {
 			goto _test_eof46
 		}
 	st_case_46:
-//line parser.go:433
+//line parser.go:427
 		switch data[p] {
 		case 33:
 			goto st46
@@ -462,114 +467,114 @@ func ParseURL(data string) (*URL, error) {
 			goto tr53
 		}
 		goto st0
-	tr48:
+tr48:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st47
-	tr57:
+    u.Host = data[host_mark:p]
+  
+	goto st47
+tr57:
 //line parser.rl:37
 
-		if u.Path == "" {
-			u.Path = data[mark:p]
-		}
-
-		goto st47
-	tr60:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+	goto st47
+tr60:
 //line parser.rl:10
-		mark = p
+ mark = p 
 //line parser.rl:31
 
-		if u.Query == "" {
-			u.Query = data[mark:p]
-		}
-
-		goto st47
-	tr62:
+    if u.Query == "" {
+      u.Query = data[mark:p]
+    }
+  
+	goto st47
+tr62:
 //line parser.rl:31
 
-		if u.Query == "" {
-			u.Query = data[mark:p]
-		}
-
-		goto st47
-	tr64:
+    if u.Query == "" {
+      u.Query = data[mark:p]
+    }
+  
+	goto st47
+tr64:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
-		goto st47
-	tr84:
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+	goto st47
+tr84:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:37
 
-		if u.Path == "" {
-			u.Path = data[mark:p]
-		}
-
-		goto st47
-	tr143:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+	goto st47
+tr143:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
-		goto st47
-	tr228:
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+	goto st47
+tr228:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
-		goto st47
+    u.Protocol = data[0:p-1]
+  
+	goto st47
 	st47:
 		if p++; p == pe {
 			goto _test_eof47
 		}
 	st_case_47:
-//line parser.go:548
+//line parser.go:542
 		if 32 <= data[p] && data[p] <= 126 {
 			goto tr54
 		}
 		goto st0
-	tr54:
+tr54:
 //line parser.rl:10
-		mark = p
-		goto st48
+ mark = p 
+	goto st48
 	st48:
 		if p++; p == pe {
 			goto _test_eof48
 		}
 	st_case_48:
-//line parser.go:562
+//line parser.go:556
 		if 32 <= data[p] && data[p] <= 126 {
 			goto st48
 		}
 		goto st0
-	tr15:
+tr15:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st1
+    host_mark = p;
+  
+	goto st1
 	st1:
 		if p++; p == pe {
 			goto _test_eof1
 		}
 	st_case_1:
-//line parser.go:578
+//line parser.go:572
 		switch {
 		case data[p] < 65:
 			if 48 <= data[p] && data[p] <= 57 {
@@ -601,48 +606,48 @@ func ParseURL(data string) (*URL, error) {
 			goto st46
 		}
 		goto st0
-	tr47:
+tr47:
 //line parser.rl:10
-		mark = p
-		goto st49
-	tr50:
+ mark = p 
+	goto st49
+tr50:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:10
-		mark = p
-		goto st49
-	tr66:
+ mark = p 
+	goto st49
+tr66:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st49
-	tr145:
+ mark = p 
+	goto st49
+tr145:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st49
+ mark = p 
+	goto st49
 	st49:
 		if p++; p == pe {
 			goto _test_eof49
 		}
 	st_case_49:
-//line parser.go:651
+//line parser.go:645
 		switch data[p] {
 		case 35:
 			goto tr57
@@ -658,22 +663,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st50
 		}
 		goto st0
-	tr86:
+tr86:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st50
+ mark = p 
+	goto st50
 	st50:
 		if p++; p == pe {
 			goto _test_eof50
 		}
 	st_case_50:
-//line parser.go:682
+//line parser.go:676
 		switch data[p] {
 		case 35:
 			goto tr57
@@ -684,120 +689,102 @@ func ParseURL(data string) (*URL, error) {
 			goto st50
 		}
 		goto st0
-	tr52:
+tr52:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st51
-	tr58:
+    u.Host = data[host_mark:p]
+  
+	goto st51
+tr58:
 //line parser.rl:37
 
-		if u.Path == "" {
-			u.Path = data[mark:p]
-		}
-
-		goto st51
-	tr67:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+	goto st51
+tr67:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
-		goto st51
-	tr85:
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+	goto st51
+tr85:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:37
 
-		if u.Path == "" {
-			u.Path = data[mark:p]
-		}
-
-		goto st51
-	tr147:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+	goto st51
+tr147:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
-		goto st51
-	tr232:
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+	goto st51
+tr232:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
-		goto st51
+    u.Protocol = data[0:p-1]
+  
+	goto st51
 	st51:
 		if p++; p == pe {
 			goto _test_eof51
 		}
 	st_case_51:
-//line parser.go:752
+//line parser.go:746
 		if data[p] == 35 {
 			goto tr60
 		}
-		switch {
-		case data[p] < 48:
-			if 32 <= data[p] && data[p] <= 46 {
-				goto tr59
-			}
-		case data[p] > 62:
-			if 64 <= data[p] && data[p] <= 126 {
-				goto tr59
-			}
-		default:
+		if 32 <= data[p] && data[p] <= 126 {
 			goto tr59
 		}
 		goto st0
-	tr59:
+tr59:
 //line parser.rl:10
-		mark = p
-		goto st52
+ mark = p 
+	goto st52
 	st52:
 		if p++; p == pe {
 			goto _test_eof52
 		}
 	st_case_52:
-//line parser.go:778
+//line parser.go:763
 		if data[p] == 35 {
 			goto tr62
 		}
-		switch {
-		case data[p] < 48:
-			if 32 <= data[p] && data[p] <= 46 {
-				goto st52
-			}
-		case data[p] > 62:
-			if 64 <= data[p] && data[p] <= 126 {
-				goto st52
-			}
-		default:
+		if 32 <= data[p] && data[p] <= 126 {
 			goto st52
 		}
 		goto st0
-	tr51:
+tr51:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st3
+    u.Host = data[host_mark:p]
+  
+	goto st3
 	st3:
 		if p++; p == pe {
 			goto _test_eof3
 		}
 	st_case_3:
-//line parser.go:806
+//line parser.go:782
 		switch data[p] {
 		case 33:
 			goto tr4
@@ -845,38 +832,38 @@ func ParseURL(data string) (*URL, error) {
 			goto tr4
 		}
 		goto st0
-	tr3:
+tr3:
 //line parser.rl:11
-		port_mark = p
-		goto st53
-	tr129:
+ port_mark = p 
+	goto st53
+tr129:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st53
-	tr211:
+ mark = p 
+	goto st53
+tr211:
 //line parser.rl:11
-		port_mark = p
+ port_mark = p 
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st53
+ mark = p 
+	goto st53
 	st53:
 		if p++; p == pe {
 			goto _test_eof53
 		}
 	st_case_53:
-//line parser.go:885
+//line parser.go:861
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -912,22 +899,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st54
 		}
 		goto st0
-	tr68:
+tr68:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st54
+ mark = p 
+	goto st54
 	st54:
 		if p++; p == pe {
 			goto _test_eof54
 		}
 	st_case_54:
-//line parser.go:936
+//line parser.go:912
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -963,22 +950,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st55
 		}
 		goto st0
-	tr72:
+tr72:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st55
+ mark = p 
+	goto st55
 	st55:
 		if p++; p == pe {
 			goto _test_eof55
 		}
 	st_case_55:
-//line parser.go:987
+//line parser.go:963
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -1014,36 +1001,36 @@ func ParseURL(data string) (*URL, error) {
 			goto st56
 		}
 		goto st0
-	tr76:
+tr76:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st56
-	tr251:
+ mark = p 
+	goto st56
+tr251:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st56
+ mark = p 
+	goto st56
 	st56:
 		if p++; p == pe {
 			goto _test_eof56
 		}
 	st_case_56:
-//line parser.go:1052
+//line parser.go:1028
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -1103,44 +1090,44 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr125:
+tr125:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:10
-		mark = p
-		goto st4
-	tr81:
+ mark = p 
+	goto st4
+tr81:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st4
-	tr200:
+ mark = p 
+	goto st4
+tr200:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st4
+ mark = p 
+	goto st4
 	st4:
 		if p++; p == pe {
 			goto _test_eof4
 		}
 	st_case_4:
-//line parser.go:1149
+//line parser.go:1125
 		if data[p] == 58 {
 			goto st5
 		}
@@ -1213,22 +1200,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st57
 		}
 		goto st0
-	tr83:
+tr83:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st7
+ mark = p 
+	goto st7
 	st7:
 		if p++; p == pe {
 			goto _test_eof7
 		}
 	st_case_7:
-//line parser.go:1237
+//line parser.go:1213
 		if data[p] == 58 {
 			goto st5
 		}
@@ -1245,36 +1232,36 @@ func ParseURL(data string) (*URL, error) {
 			goto st57
 		}
 		goto st0
-	tr79:
+tr79:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st59
-	tr210:
+ mark = p 
+	goto st59
+tr210:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st59
+ mark = p 
+	goto st59
 	st59:
 		if p++; p == pe {
 			goto _test_eof59
 		}
 	st_case_59:
-//line parser.go:1283
+//line parser.go:1259
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -1296,36 +1283,36 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr80:
+tr80:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st60
-	tr156:
+ mark = p 
+	goto st60
+tr156:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st60
+ mark = p 
+	goto st60
 	st60:
 		if p++; p == pe {
 			goto _test_eof60
 		}
 	st_case_60:
-//line parser.go:1334
+//line parser.go:1310
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -1455,22 +1442,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr88:
+tr88:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st63
+ mark = p 
+	goto st63
 	st63:
 		if p++; p == pe {
 			goto _test_eof63
 		}
 	st_case_63:
-//line parser.go:1479
+//line parser.go:1455
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -1506,36 +1493,36 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr77:
+tr77:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st64
-	tr153:
+ mark = p 
+	goto st64
+tr153:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st64
+ mark = p 
+	goto st64
 	st64:
 		if p++; p == pe {
 			goto _test_eof64
 		}
 	st_case_64:
-//line parser.go:1544
+//line parser.go:1520
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -1571,22 +1558,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st65
 		}
 		goto st0
-	tr91:
+tr91:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st65
+ mark = p 
+	goto st65
 	st65:
 		if p++; p == pe {
 			goto _test_eof65
 		}
 	st_case_65:
-//line parser.go:1595
+//line parser.go:1571
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -1676,22 +1663,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr86
 		}
 		goto st0
-	tr93:
+tr93:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st67
+ mark = p 
+	goto st67
 	st67:
 		if p++; p == pe {
 			goto _test_eof67
 		}
 	st_case_67:
-//line parser.go:1700
+//line parser.go:1676
 		switch data[p] {
 		case 35:
 			goto tr57
@@ -1787,22 +1774,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr95:
+tr95:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st69
+ mark = p 
+	goto st69
 	st69:
 		if p++; p == pe {
 			goto _test_eof69
 		}
 	st_case_69:
-//line parser.go:1811
+//line parser.go:1787
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -1856,36 +1843,36 @@ func ParseURL(data string) (*URL, error) {
 			goto tr79
 		}
 		goto st0
-	tr73:
+tr73:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st70
-	tr149:
+ mark = p 
+	goto st70
+tr149:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st70
+ mark = p 
+	goto st70
 	st70:
 		if p++; p == pe {
 			goto _test_eof70
 		}
 	st_case_70:
-//line parser.go:1894
+//line parser.go:1870
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -1921,22 +1908,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st71
 		}
 		goto st0
-	tr98:
+tr98:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st71
+ mark = p 
+	goto st71
 	st71:
 		if p++; p == pe {
 			goto _test_eof71
 		}
 	st_case_71:
-//line parser.go:1945
+//line parser.go:1921
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -2030,22 +2017,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr91
 		}
 		goto st0
-	tr100:
+tr100:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st73
+ mark = p 
+	goto st73
 	st73:
 		if p++; p == pe {
 			goto _test_eof73
 		}
 	st_case_73:
-//line parser.go:2054
+//line parser.go:2030
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -2155,22 +2142,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr102:
+tr102:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st75
+ mark = p 
+	goto st75
 	st75:
 		if p++; p == pe {
 			goto _test_eof75
 		}
 	st_case_75:
-//line parser.go:2179
+//line parser.go:2155
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -2224,36 +2211,36 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr69:
+tr69:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st76
-	tr239:
+ mark = p 
+	goto st76
+tr239:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st76
+ mark = p 
+	goto st76
 	st76:
 		if p++; p == pe {
 			goto _test_eof76
 		}
 	st_case_76:
-//line parser.go:2262
+//line parser.go:2238
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -2289,22 +2276,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st77
 		}
 		goto st0
-	tr105:
+tr105:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st77
+ mark = p 
+	goto st77
 	st77:
 		if p++; p == pe {
 			goto _test_eof77
 		}
 	st_case_77:
-//line parser.go:2313
+//line parser.go:2289
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -2398,22 +2385,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr98
 		}
 		goto st0
-	tr107:
+tr107:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st79
+ mark = p 
+	goto st79
 	st79:
 		if p++; p == pe {
 			goto _test_eof79
 		}
 	st_case_79:
-//line parser.go:2422
+//line parser.go:2398
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -2467,46 +2454,46 @@ func ParseURL(data string) (*URL, error) {
 			goto tr91
 		}
 		goto st0
-	tr4:
+tr4:
 //line parser.rl:11
-		port_mark = p
-		goto st80
-	tr137:
+ port_mark = p 
+	goto st80
+tr137:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st80
-	tr160:
+ mark = p 
+	goto st80
+tr160:
 //line parser.rl:11
-		port_mark = p
+ port_mark = p 
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st80
-	tr231:
+ mark = p 
+	goto st80
+tr231:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:11
-		port_mark = p
-		goto st80
+ port_mark = p 
+	goto st80
 	st80:
 		if p++; p == pe {
 			goto _test_eof80
 		}
 	st_case_80:
-//line parser.go:2515
+//line parser.go:2491
 		switch data[p] {
 		case 33:
 			goto st81
@@ -2558,22 +2545,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr111
 		}
 		goto st0
-	tr111:
+tr111:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st81
+ mark = p 
+	goto st81
 	st81:
 		if p++; p == pe {
 			goto _test_eof81
 		}
 	st_case_81:
-//line parser.go:2582
+//line parser.go:2558
 		switch data[p] {
 		case 33:
 			goto st82
@@ -2625,22 +2612,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr115
 		}
 		goto st0
-	tr115:
+tr115:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st82
+ mark = p 
+	goto st82
 	st82:
 		if p++; p == pe {
 			goto _test_eof82
 		}
 	st_case_82:
-//line parser.go:2649
+//line parser.go:2625
 		switch data[p] {
 		case 33:
 			goto st83
@@ -2692,22 +2679,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr119
 		}
 		goto st0
-	tr119:
+tr119:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st83
+ mark = p 
+	goto st83
 	st83:
 		if p++; p == pe {
 			goto _test_eof83
 		}
 	st_case_83:
-//line parser.go:2716
+//line parser.go:2692
 		switch data[p] {
 		case 33:
 			goto st84
@@ -2913,18 +2900,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr14
 		}
 		goto st0
-	tr16:
+tr16:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st12
+    host_mark = p;
+  
+	goto st12
 	st12:
 		if p++; p == pe {
 			goto _test_eof12
 		}
 	st_case_12:
-//line parser.go:2933
+//line parser.go:2909
 		if data[p] == 118 {
 			goto st28
 		}
@@ -3101,18 +3088,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr125
 		}
 		goto st0
-	tr124:
+tr124:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st23
+    u.Host = data[host_mark:p]
+  
+	goto st23
 	st23:
 		if p++; p == pe {
 			goto _test_eof23
 		}
 	st_case_23:
-//line parser.go:3121
+//line parser.go:3097
 		if data[p] == 37 {
 			goto tr31
 		}
@@ -3134,16 +3121,16 @@ func ParseURL(data string) (*URL, error) {
 			goto tr3
 		}
 		goto st0
-	tr31:
+tr31:
 //line parser.rl:11
-		port_mark = p
-		goto st86
+ port_mark = p 
+	goto st86
 	st86:
 		if p++; p == pe {
 			goto _test_eof86
 		}
 	st_case_86:
-//line parser.go:3152
+//line parser.go:3128
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -3197,22 +3184,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr68
 		}
 		goto st0
-	tr127:
+tr127:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st87
+ mark = p 
+	goto st87
 	st87:
 		if p++; p == pe {
 			goto _test_eof87
 		}
 	st_case_87:
-//line parser.go:3221
+//line parser.go:3197
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -3419,22 +3406,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st31
 		}
 		goto st0
-	tr123:
+tr123:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st32
+ mark = p 
+	goto st32
 	st32:
 		if p++; p == pe {
 			goto _test_eof32
 		}
 	st_case_32:
-//line parser.go:3443
+//line parser.go:3419
 		switch data[p] {
 		case 33:
 			goto st8
@@ -3561,22 +3548,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st84
 		}
 		goto st0
-	tr131:
+tr131:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st35
+ mark = p 
+	goto st35
 	st35:
 		if p++; p == pe {
 			goto _test_eof35
 		}
 	st_case_35:
-//line parser.go:3585
+//line parser.go:3561
 		if data[p] == 58 {
 			goto st5
 		}
@@ -3637,56 +3624,56 @@ func ParseURL(data string) (*URL, error) {
 			goto tr132
 		}
 		goto st0
-	tr53:
+tr53:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:10
-		mark = p
-		goto st90
-	tr132:
+ mark = p 
+	goto st90
+tr132:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st90
-	tr157:
+ mark = p 
+	goto st90
+tr157:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st90
-	tr223:
+ mark = p 
+	goto st90
+tr223:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:10
-		mark = p
-		goto st90
+ mark = p 
+	goto st90
 	st90:
 		if p++; p == pe {
 			goto _test_eof90
 		}
 	st_case_90:
-//line parser.go:3695
+//line parser.go:3671
 		switch data[p] {
 		case 33:
 			goto st46
@@ -3724,18 +3711,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr53
 		}
 		goto st0
-	tr133:
+tr133:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st36
+    u.Host = data[host_mark:p]
+  
+	goto st36
 	st36:
 		if p++; p == pe {
 			goto _test_eof36
 		}
 	st_case_36:
-//line parser.go:3744
+//line parser.go:3720
 		switch data[p] {
 		case 33:
 			goto tr4
@@ -3783,16 +3770,16 @@ func ParseURL(data string) (*URL, error) {
 			goto tr4
 		}
 		goto st0
-	tr5:
+tr5:
 //line parser.rl:11
-		port_mark = p
-		goto st91
+ port_mark = p 
+	goto st91
 	st91:
 		if p++; p == pe {
 			goto _test_eof91
 		}
 	st_case_91:
-//line parser.go:3801
+//line parser.go:3777
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -3846,22 +3833,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr68
 		}
 		goto st0
-	tr135:
+tr135:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st92
+ mark = p 
+	goto st92
 	st92:
 		if p++; p == pe {
 			goto _test_eof92
 		}
 	st_case_92:
-//line parser.go:3870
+//line parser.go:3846
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -3915,24 +3902,24 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr6:
+tr6:
 //line parser.rl:11
-		port_mark = p
-		goto st93
-	tr233:
+ port_mark = p 
+	goto st93
+tr233:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:11
-		port_mark = p
-		goto st93
+ port_mark = p 
+	goto st93
 	st93:
 		if p++; p == pe {
 			goto _test_eof93
 		}
 	st_case_93:
-//line parser.go:3941
+//line parser.go:3917
 		switch data[p] {
 		case 33:
 			goto tr138
@@ -3988,56 +3975,56 @@ func ParseURL(data string) (*URL, error) {
 			goto tr140
 		}
 		goto st0
-	tr138:
+tr138:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st94
-	tr190:
+    host_mark = p;
+  
+	goto st94
+tr190:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st94
-	tr140:
+ mark = p 
+	goto st94
+tr140:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st94
-	tr238:
+ mark = p 
+	goto st94
+tr238:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st94
+ mark = p 
+	goto st94
 	st94:
 		if p++; p == pe {
 			goto _test_eof94
 		}
 	st_case_94:
-//line parser.go:4046
+//line parser.go:4022
 		switch data[p] {
 		case 33:
 			goto st95
@@ -4091,56 +4078,56 @@ func ParseURL(data string) (*URL, error) {
 			goto tr148
 		}
 		goto st0
-	tr191:
+tr191:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st95
-	tr178:
+    host_mark = p;
+  
+	goto st95
+tr178:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st95
-	tr193:
+ mark = p 
+	goto st95
+tr193:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st95
-	tr148:
+ mark = p 
+	goto st95
+tr148:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st95
+ mark = p 
+	goto st95
 	st95:
 		if p++; p == pe {
 			goto _test_eof95
 		}
 	st_case_95:
-//line parser.go:4149
+//line parser.go:4125
 		switch data[p] {
 		case 33:
 			goto st96
@@ -4194,56 +4181,56 @@ func ParseURL(data string) (*URL, error) {
 			goto tr152
 		}
 		goto st0
-	tr179:
+tr179:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st96
-	tr169:
+    host_mark = p;
+  
+	goto st96
+tr169:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st96
-	tr181:
+ mark = p 
+	goto st96
+tr181:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st96
-	tr152:
+ mark = p 
+	goto st96
+tr152:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st96
+ mark = p 
+	goto st96
 	st96:
 		if p++; p == pe {
 			goto _test_eof96
 		}
 	st_case_96:
-//line parser.go:4252
+//line parser.go:4228
 		switch data[p] {
 		case 33:
 			goto st97
@@ -4297,18 +4284,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr155
 		}
 		goto st0
-	tr170:
+tr170:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st97
+    host_mark = p;
+  
+	goto st97
 	st97:
 		if p++; p == pe {
 			goto _test_eof97
 		}
 	st_case_97:
-//line parser.go:4317
+//line parser.go:4293
 		switch data[p] {
 		case 33:
 			goto st46
@@ -4346,18 +4333,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr157
 		}
 		goto st0
-	tr171:
+tr171:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st98
+    host_mark = p;
+  
+	goto st98
 	st98:
 		if p++; p == pe {
 			goto _test_eof98
 		}
 	st_case_98:
-//line parser.go:4366
+//line parser.go:4342
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -4409,22 +4396,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st97
 		}
 		goto st0
-	tr159:
+tr159:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st38
+ mark = p 
+	goto st38
 	st38:
 		if p++; p == pe {
 			goto _test_eof38
 		}
 	st_case_38:
-//line parser.go:4433
+//line parser.go:4409
 		if data[p] == 58 {
 			goto st5
 		}
@@ -4441,18 +4428,18 @@ func ParseURL(data string) (*URL, error) {
 			goto st97
 		}
 		goto st0
-	tr146:
+tr146:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st99
+    u.Host = data[host_mark:p]
+  
+	goto st99
 	st99:
 		if p++; p == pe {
 			goto _test_eof99
 		}
 	st_case_99:
-//line parser.go:4461
+//line parser.go:4437
 		switch data[p] {
 		case 33:
 			goto tr4
@@ -4504,38 +4491,38 @@ func ParseURL(data string) (*URL, error) {
 			goto tr160
 		}
 		goto st0
-	tr39:
+tr39:
 //line parser.rl:11
-		port_mark = p
-		goto st100
-	tr161:
+ port_mark = p 
+	goto st100
+tr161:
 //line parser.rl:11
-		port_mark = p
+ port_mark = p 
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st100
-	tr236:
+ mark = p 
+	goto st100
+tr236:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:11
-		port_mark = p
+ port_mark = p 
 //line parser.rl:10
-		mark = p
-		goto st100
+ mark = p 
+	goto st100
 	st100:
 		if p++; p == pe {
 			goto _test_eof100
 		}
 	st_case_100:
-//line parser.go:4544
+//line parser.go:4520
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -4571,22 +4558,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st101
 		}
 		goto st0
-	tr164:
+tr164:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st101
+ mark = p 
+	goto st101
 	st101:
 		if p++; p == pe {
 			goto _test_eof101
 		}
 	st_case_101:
-//line parser.go:4595
+//line parser.go:4571
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -4680,22 +4667,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr105
 		}
 		goto st0
-	tr166:
+tr166:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st103
+ mark = p 
+	goto st103
 	st103:
 		if p++; p == pe {
 			goto _test_eof103
 		}
 	st_case_103:
-//line parser.go:4704
+//line parser.go:4680
 		switch data[p] {
 		case 35:
 			goto tr84
@@ -4749,40 +4736,40 @@ func ParseURL(data string) (*URL, error) {
 			goto tr98
 		}
 		goto st0
-	tr172:
+tr172:
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st104
-	tr155:
+ mark = p 
+	goto st104
+tr155:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st104
+ mark = p 
+	goto st104
 	st104:
 		if p++; p == pe {
 			goto _test_eof104
 		}
 	st_case_104:
-//line parser.go:4791
+//line parser.go:4767
 		switch data[p] {
 		case 33:
 			goto st46
@@ -4820,18 +4807,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr157
 		}
 		goto st0
-	tr180:
+tr180:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st105
+    host_mark = p;
+  
+	goto st105
 	st105:
 		if p++; p == pe {
 			goto _test_eof105
 		}
 	st_case_105:
-//line parser.go:4840
+//line parser.go:4816
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -4923,22 +4910,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr168:
+tr168:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st107
+ mark = p 
+	goto st107
 	st107:
 		if p++; p == pe {
 			goto _test_eof107
 		}
 	st_case_107:
-//line parser.go:4947
+//line parser.go:4923
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5034,18 +5021,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr172
 		}
 		goto st0
-	tr173:
+tr173:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st109
+    host_mark = p;
+  
+	goto st109
 	st109:
 		if p++; p == pe {
 			goto _test_eof109
 		}
 	st_case_109:
-//line parser.go:5054
+//line parser.go:5030
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5081,22 +5068,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr174:
+tr174:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st39
+ mark = p 
+	goto st39
 	st39:
 		if p++; p == pe {
 			goto _test_eof39
 		}
 	st_case_39:
-//line parser.go:5105
+//line parser.go:5081
 		switch data[p] {
 		case 58:
 			goto st40
@@ -5144,22 +5131,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st13
 		}
 		goto st0
-	tr175:
+tr175:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st41
+ mark = p 
+	goto st41
 	st41:
 		if p++; p == pe {
 			goto _test_eof41
 		}
 	st_case_41:
-//line parser.go:5168
+//line parser.go:5144
 		if data[p] == 58 {
 			goto st5
 		}
@@ -5176,18 +5163,18 @@ func ParseURL(data string) (*URL, error) {
 			goto st29
 		}
 		goto st0
-	tr192:
+tr192:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st110
+    host_mark = p;
+  
+	goto st110
 	st110:
 		if p++; p == pe {
 			goto _test_eof110
 		}
 	st_case_110:
-//line parser.go:5196
+//line parser.go:5172
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5241,22 +5228,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr177:
+tr177:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st111
+ mark = p 
+	goto st111
 	st111:
 		if p++; p == pe {
 			goto _test_eof111
 		}
 	st_case_111:
-//line parser.go:5265
+//line parser.go:5241
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5370,18 +5357,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr181
 		}
 		goto st0
-	tr182:
+tr182:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st113
+    host_mark = p;
+  
+	goto st113
 	st113:
 		if p++; p == pe {
 			goto _test_eof113
 		}
 	st_case_113:
-//line parser.go:5390
+//line parser.go:5366
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5479,22 +5466,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr184:
+tr184:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st115
+ mark = p 
+	goto st115
 	st115:
 		if p++; p == pe {
 			goto _test_eof115
 		}
 	st_case_115:
-//line parser.go:5503
+//line parser.go:5479
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5532,22 +5519,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr185:
+tr185:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st116
+ mark = p 
+	goto st116
 	st116:
 		if p++; p == pe {
 			goto _test_eof116
 		}
 	st_case_116:
-//line parser.go:5556
+//line parser.go:5532
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5583,22 +5570,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr186:
+tr186:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st42
+ mark = p 
+	goto st42
 	st42:
 		if p++; p == pe {
 			goto _test_eof42
 		}
 	st_case_42:
-//line parser.go:5607
+//line parser.go:5583
 		switch data[p] {
 		case 46:
 			goto st30
@@ -5618,18 +5605,18 @@ func ParseURL(data string) (*URL, error) {
 			goto st29
 		}
 		goto st0
-	tr139:
+tr139:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st117
+    host_mark = p;
+  
+	goto st117
 	st117:
 		if p++; p == pe {
 			goto _test_eof117
 		}
 	st_case_117:
-//line parser.go:5638
+//line parser.go:5614
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5683,22 +5670,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr188:
+tr188:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st118
+ mark = p 
+	goto st118
 	st118:
 		if p++; p == pe {
 			goto _test_eof118
 		}
 	st_case_118:
-//line parser.go:5707
+//line parser.go:5683
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5812,18 +5799,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr193
 		}
 		goto st0
-	tr194:
+tr194:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st120
+    host_mark = p;
+  
+	goto st120
 	st120:
 		if p++; p == pe {
 			goto _test_eof120
 		}
 	st_case_120:
-//line parser.go:5832
+//line parser.go:5808
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -5879,22 +5866,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr196:
+tr196:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st121
+ mark = p 
+	goto st121
 	st121:
 		if p++; p == pe {
 			goto _test_eof121
 		}
 	st_case_121:
-//line parser.go:5903
+//line parser.go:5879
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6022,22 +6009,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr200
 		}
 		goto st0
-	tr197:
+tr197:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st124
+ mark = p 
+	goto st124
 	st124:
 		if p++; p == pe {
 			goto _test_eof124
 		}
 	st_case_124:
-//line parser.go:6046
+//line parser.go:6022
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6131,22 +6118,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr202:
+tr202:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st126
+ mark = p 
+	goto st126
 	st126:
 		if p++; p == pe {
 			goto _test_eof126
 		}
 	st_case_126:
-//line parser.go:6155
+//line parser.go:6131
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6184,18 +6171,18 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr141:
+tr141:
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st127
+    host_mark = p;
+  
+	goto st127
 	st127:
 		if p++; p == pe {
 			goto _test_eof127
 		}
 	st_case_127:
-//line parser.go:6204
+//line parser.go:6180
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6251,22 +6238,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr204:
+tr204:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st128
+ mark = p 
+	goto st128
 	st128:
 		if p++; p == pe {
 			goto _test_eof128
 		}
 	st_case_128:
-//line parser.go:6275
+//line parser.go:6251
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6458,18 +6445,18 @@ func ParseURL(data string) (*URL, error) {
 			goto st57
 		}
 		goto st0
-	tr209:
+tr209:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st132
+    u.Host = data[host_mark:p]
+  
+	goto st132
 	st132:
 		if p++; p == pe {
 			goto _test_eof132
 		}
 	st_case_132:
-//line parser.go:6478
+//line parser.go:6454
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6505,22 +6492,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr3
 		}
 		goto st0
-	tr205:
+tr205:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st133
+ mark = p 
+	goto st133
 	st133:
 		if p++; p == pe {
 			goto _test_eof133
 		}
 	st_case_133:
-//line parser.go:6529
+//line parser.go:6505
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6574,22 +6561,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr213:
+tr213:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st134
+ mark = p 
+	goto st134
 	st134:
 		if p++; p == pe {
 			goto _test_eof134
 		}
 	st_case_134:
-//line parser.go:6598
+//line parser.go:6574
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -6683,22 +6670,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr215
 		}
 		goto st0
-	tr215:
+tr215:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st43
+ mark = p 
+	goto st43
 	st43:
 		if p++; p == pe {
 			goto _test_eof43
 		}
 	st_case_43:
-//line parser.go:6707
+//line parser.go:6683
 		switch data[p] {
 		case 33:
 			goto st31
@@ -6769,22 +6756,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st31
 		}
 		goto st0
-	tr122:
+tr122:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st136
+ mark = p 
+	goto st136
 	st136:
 		if p++; p == pe {
 			goto _test_eof136
 		}
 	st_case_136:
-//line parser.go:6793
+//line parser.go:6769
 		switch data[p] {
 		case 33:
 			goto st8
@@ -6918,22 +6905,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr81
 		}
 		goto st0
-	tr217:
+tr217:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st139
+ mark = p 
+	goto st139
 	st139:
 		if p++; p == pe {
 			goto _test_eof139
 		}
 	st_case_139:
-//line parser.go:6942
+//line parser.go:6918
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7027,22 +7014,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr219:
+tr219:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st141
+ mark = p 
+	goto st141
 	st141:
 		if p++; p == pe {
 			goto _test_eof141
 		}
 	st_case_141:
-//line parser.go:7051
+//line parser.go:7027
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7154,22 +7141,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr221:
+tr221:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st143
+ mark = p 
+	goto st143
 	st143:
 		if p++; p == pe {
 			goto _test_eof143
 		}
 	st_case_143:
-//line parser.go:7178
+//line parser.go:7154
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7223,24 +7210,24 @@ func ParseURL(data string) (*URL, error) {
 			goto tr76
 		}
 		goto st0
-	tr44:
+tr44:
 //line parser.rl:10
-		mark = p
-		goto st144
-	tr230:
+ mark = p 
+	goto st144
+tr230:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:10
-		mark = p
-		goto st144
+ mark = p 
+	goto st144
 	st144:
 		if p++; p == pe {
 			goto _test_eof144
 		}
 	st_case_144:
-//line parser.go:7249
+//line parser.go:7225
 		switch data[p] {
 		case 35:
 			goto tr57
@@ -7297,28 +7284,28 @@ func ParseURL(data string) (*URL, error) {
 			goto tr223
 		}
 		goto st0
-	tr46:
+tr46:
 //line parser.rl:10
-		mark = p
+ mark = p 
 //line parser.rl:23
 
-		host_mark = p
-
-		goto st146
-	tr226:
+    host_mark = p;
+  
+	goto st146
+tr226:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:10
-		mark = p
-		goto st146
+ mark = p 
+	goto st146
 	st146:
 		if p++; p == pe {
 			goto _test_eof146
 		}
 	st_case_146:
-//line parser.go:7327
+//line parser.go:7303
 		switch data[p] {
 		case 33:
 			goto st46
@@ -7365,18 +7352,18 @@ func ParseURL(data string) (*URL, error) {
 			goto st146
 		}
 		goto st0
-	tr225:
+tr225:
 //line parser.rl:27
 
-		u.Host = data[host_mark:p]
-
-		goto st147
+    u.Host = data[host_mark:p]
+  
+	goto st147
 	st147:
 		if p++; p == pe {
 			goto _test_eof147
 		}
 	st_case_147:
-//line parser.go:7385
+//line parser.go:7361
 		switch data[p] {
 		case 33:
 			goto tr227
@@ -7432,48 +7419,48 @@ func ParseURL(data string) (*URL, error) {
 			goto tr234
 		}
 		goto st0
-	tr243:
+tr243:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st148
-	tr227:
+ mark = p 
+	goto st148
+tr227:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:11
-		port_mark = p
-		goto st148
-	tr234:
+ port_mark = p 
+	goto st148
+tr234:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:11
-		port_mark = p
+ port_mark = p 
 //line parser.rl:10
-		mark = p
-		goto st148
+ mark = p 
+	goto st148
 	st148:
 		if p++; p == pe {
 			goto _test_eof148
 		}
 	st_case_148:
-//line parser.go:7482
+//line parser.go:7458
 		switch data[p] {
 		case 33:
 			goto st94
@@ -7527,24 +7514,24 @@ func ParseURL(data string) (*URL, error) {
 			goto tr238
 		}
 		goto st0
-	tr229:
+tr229:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:11
-		port_mark = p
-		goto st149
+ port_mark = p 
+	goto st149
 	st149:
 		if p++; p == pe {
 			goto _test_eof149
 		}
 	st_case_149:
-//line parser.go:7553
+//line parser.go:7529
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7598,22 +7585,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr68
 		}
 		goto st0
-	tr241:
+tr241:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st150
+ mark = p 
+	goto st150
 	st150:
 		if p++; p == pe {
 			goto _test_eof150
 		}
 	st_case_150:
-//line parser.go:7622
+//line parser.go:7598
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7667,24 +7654,24 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr235:
+tr235:
 //line parser.rl:19
 
-		u.Protocol = data[0 : p-1]
-
+    u.Protocol = data[0:p-1]
+  
 //line parser.rl:23
 
-		host_mark = p
-
+    host_mark = p;
+  
 //line parser.rl:11
-		port_mark = p
-		goto st151
+ port_mark = p 
+	goto st151
 	st151:
 		if p++; p == pe {
 			goto _test_eof151
 		}
 	st_case_151:
-//line parser.go:7693
+//line parser.go:7669
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7740,22 +7727,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr68
 		}
 		goto st0
-	tr245:
+tr245:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st152
+ mark = p 
+	goto st152
 	st152:
 		if p++; p == pe {
 			goto _test_eof152
 		}
 	st_case_152:
-//line parser.go:7764
+//line parser.go:7740
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -7997,22 +7984,22 @@ func ParseURL(data string) (*URL, error) {
 			goto st56
 		}
 		goto st0
-	tr246:
+tr246:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st157
+ mark = p 
+	goto st157
 	st157:
 		if p++; p == pe {
 			goto _test_eof157
 		}
 	st_case_157:
-//line parser.go:8021
+//line parser.go:7997
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -8066,22 +8053,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr72
 		}
 		goto st0
-	tr253:
+tr253:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st158
+ mark = p 
+	goto st158
 	st158:
 		if p++; p == pe {
 			goto _test_eof158
 		}
 	st_case_158:
-//line parser.go:8090
+//line parser.go:8066
 		switch data[p] {
 		case 35:
 			goto tr64
@@ -8233,22 +8220,22 @@ func ParseURL(data string) (*URL, error) {
 			goto tr215
 		}
 		goto st0
-	tr256:
+tr256:
 //line parser.rl:13
 
-		if port_mark > host_mark {
-			u.Port = data[port_mark:p]
-		}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:10
-		mark = p
-		goto st161
+ mark = p 
+	goto st161
 	st161:
 		if p++; p == pe {
 			goto _test_eof161
 		}
 	st_case_161:
-//line parser.go:8257
+//line parser.go:8233
 		switch data[p] {
 		case 33:
 			goto st31
@@ -8287,581 +8274,258 @@ func ParseURL(data string) (*URL, error) {
 		}
 		goto st0
 	st_out:
-	_test_eof46:
-		cs = 46
-		goto _test_eof
-	_test_eof47:
-		cs = 47
-		goto _test_eof
-	_test_eof48:
-		cs = 48
-		goto _test_eof
-	_test_eof1:
-		cs = 1
-		goto _test_eof
-	_test_eof2:
-		cs = 2
-		goto _test_eof
-	_test_eof49:
-		cs = 49
-		goto _test_eof
-	_test_eof50:
-		cs = 50
-		goto _test_eof
-	_test_eof51:
-		cs = 51
-		goto _test_eof
-	_test_eof52:
-		cs = 52
-		goto _test_eof
-	_test_eof3:
-		cs = 3
-		goto _test_eof
-	_test_eof53:
-		cs = 53
-		goto _test_eof
-	_test_eof54:
-		cs = 54
-		goto _test_eof
-	_test_eof55:
-		cs = 55
-		goto _test_eof
-	_test_eof56:
-		cs = 56
-		goto _test_eof
-	_test_eof57:
-		cs = 57
-		goto _test_eof
-	_test_eof4:
-		cs = 4
-		goto _test_eof
-	_test_eof5:
-		cs = 5
-		goto _test_eof
-	_test_eof58:
-		cs = 58
-		goto _test_eof
-	_test_eof6:
-		cs = 6
-		goto _test_eof
-	_test_eof7:
-		cs = 7
-		goto _test_eof
-	_test_eof59:
-		cs = 59
-		goto _test_eof
-	_test_eof60:
-		cs = 60
-		goto _test_eof
-	_test_eof61:
-		cs = 61
-		goto _test_eof
-	_test_eof62:
-		cs = 62
-		goto _test_eof
-	_test_eof63:
-		cs = 63
-		goto _test_eof
-	_test_eof64:
-		cs = 64
-		goto _test_eof
-	_test_eof65:
-		cs = 65
-		goto _test_eof
-	_test_eof66:
-		cs = 66
-		goto _test_eof
-	_test_eof67:
-		cs = 67
-		goto _test_eof
-	_test_eof68:
-		cs = 68
-		goto _test_eof
-	_test_eof69:
-		cs = 69
-		goto _test_eof
-	_test_eof70:
-		cs = 70
-		goto _test_eof
-	_test_eof71:
-		cs = 71
-		goto _test_eof
-	_test_eof72:
-		cs = 72
-		goto _test_eof
-	_test_eof73:
-		cs = 73
-		goto _test_eof
-	_test_eof74:
-		cs = 74
-		goto _test_eof
-	_test_eof75:
-		cs = 75
-		goto _test_eof
-	_test_eof76:
-		cs = 76
-		goto _test_eof
-	_test_eof77:
-		cs = 77
-		goto _test_eof
-	_test_eof78:
-		cs = 78
-		goto _test_eof
-	_test_eof79:
-		cs = 79
-		goto _test_eof
-	_test_eof80:
-		cs = 80
-		goto _test_eof
-	_test_eof81:
-		cs = 81
-		goto _test_eof
-	_test_eof82:
-		cs = 82
-		goto _test_eof
-	_test_eof83:
-		cs = 83
-		goto _test_eof
-	_test_eof84:
-		cs = 84
-		goto _test_eof
-	_test_eof8:
-		cs = 8
-		goto _test_eof
-	_test_eof9:
-		cs = 9
-		goto _test_eof
-	_test_eof10:
-		cs = 10
-		goto _test_eof
-	_test_eof11:
-		cs = 11
-		goto _test_eof
-	_test_eof12:
-		cs = 12
-		goto _test_eof
-	_test_eof13:
-		cs = 13
-		goto _test_eof
-	_test_eof14:
-		cs = 14
-		goto _test_eof
-	_test_eof15:
-		cs = 15
-		goto _test_eof
-	_test_eof16:
-		cs = 16
-		goto _test_eof
-	_test_eof17:
-		cs = 17
-		goto _test_eof
-	_test_eof18:
-		cs = 18
-		goto _test_eof
-	_test_eof19:
-		cs = 19
-		goto _test_eof
-	_test_eof20:
-		cs = 20
-		goto _test_eof
-	_test_eof21:
-		cs = 21
-		goto _test_eof
-	_test_eof22:
-		cs = 22
-		goto _test_eof
-	_test_eof85:
-		cs = 85
-		goto _test_eof
-	_test_eof23:
-		cs = 23
-		goto _test_eof
-	_test_eof86:
-		cs = 86
-		goto _test_eof
-	_test_eof87:
-		cs = 87
-		goto _test_eof
-	_test_eof24:
-		cs = 24
-		goto _test_eof
-	_test_eof25:
-		cs = 25
-		goto _test_eof
-	_test_eof26:
-		cs = 26
-		goto _test_eof
-	_test_eof27:
-		cs = 27
-		goto _test_eof
-	_test_eof28:
-		cs = 28
-		goto _test_eof
-	_test_eof29:
-		cs = 29
-		goto _test_eof
-	_test_eof30:
-		cs = 30
-		goto _test_eof
-	_test_eof31:
-		cs = 31
-		goto _test_eof
-	_test_eof32:
-		cs = 32
-		goto _test_eof
-	_test_eof33:
-		cs = 33
-		goto _test_eof
-	_test_eof88:
-		cs = 88
-		goto _test_eof
-	_test_eof34:
-		cs = 34
-		goto _test_eof
-	_test_eof35:
-		cs = 35
-		goto _test_eof
-	_test_eof89:
-		cs = 89
-		goto _test_eof
-	_test_eof90:
-		cs = 90
-		goto _test_eof
-	_test_eof36:
-		cs = 36
-		goto _test_eof
-	_test_eof91:
-		cs = 91
-		goto _test_eof
-	_test_eof92:
-		cs = 92
-		goto _test_eof
-	_test_eof93:
-		cs = 93
-		goto _test_eof
-	_test_eof94:
-		cs = 94
-		goto _test_eof
-	_test_eof95:
-		cs = 95
-		goto _test_eof
-	_test_eof96:
-		cs = 96
-		goto _test_eof
-	_test_eof97:
-		cs = 97
-		goto _test_eof
-	_test_eof98:
-		cs = 98
-		goto _test_eof
-	_test_eof37:
-		cs = 37
-		goto _test_eof
-	_test_eof38:
-		cs = 38
-		goto _test_eof
-	_test_eof99:
-		cs = 99
-		goto _test_eof
-	_test_eof100:
-		cs = 100
-		goto _test_eof
-	_test_eof101:
-		cs = 101
-		goto _test_eof
-	_test_eof102:
-		cs = 102
-		goto _test_eof
-	_test_eof103:
-		cs = 103
-		goto _test_eof
-	_test_eof104:
-		cs = 104
-		goto _test_eof
-	_test_eof105:
-		cs = 105
-		goto _test_eof
-	_test_eof106:
-		cs = 106
-		goto _test_eof
-	_test_eof107:
-		cs = 107
-		goto _test_eof
-	_test_eof108:
-		cs = 108
-		goto _test_eof
-	_test_eof109:
-		cs = 109
-		goto _test_eof
-	_test_eof39:
-		cs = 39
-		goto _test_eof
-	_test_eof40:
-		cs = 40
-		goto _test_eof
-	_test_eof41:
-		cs = 41
-		goto _test_eof
-	_test_eof110:
-		cs = 110
-		goto _test_eof
-	_test_eof111:
-		cs = 111
-		goto _test_eof
-	_test_eof112:
-		cs = 112
-		goto _test_eof
-	_test_eof113:
-		cs = 113
-		goto _test_eof
-	_test_eof114:
-		cs = 114
-		goto _test_eof
-	_test_eof115:
-		cs = 115
-		goto _test_eof
-	_test_eof116:
-		cs = 116
-		goto _test_eof
-	_test_eof42:
-		cs = 42
-		goto _test_eof
-	_test_eof117:
-		cs = 117
-		goto _test_eof
-	_test_eof118:
-		cs = 118
-		goto _test_eof
-	_test_eof119:
-		cs = 119
-		goto _test_eof
-	_test_eof120:
-		cs = 120
-		goto _test_eof
-	_test_eof121:
-		cs = 121
-		goto _test_eof
-	_test_eof122:
-		cs = 122
-		goto _test_eof
-	_test_eof123:
-		cs = 123
-		goto _test_eof
-	_test_eof124:
-		cs = 124
-		goto _test_eof
-	_test_eof125:
-		cs = 125
-		goto _test_eof
-	_test_eof126:
-		cs = 126
-		goto _test_eof
-	_test_eof127:
-		cs = 127
-		goto _test_eof
-	_test_eof128:
-		cs = 128
-		goto _test_eof
-	_test_eof129:
-		cs = 129
-		goto _test_eof
-	_test_eof130:
-		cs = 130
-		goto _test_eof
-	_test_eof131:
-		cs = 131
-		goto _test_eof
-	_test_eof132:
-		cs = 132
-		goto _test_eof
-	_test_eof133:
-		cs = 133
-		goto _test_eof
-	_test_eof134:
-		cs = 134
-		goto _test_eof
-	_test_eof135:
-		cs = 135
-		goto _test_eof
-	_test_eof43:
-		cs = 43
-		goto _test_eof
-	_test_eof44:
-		cs = 44
-		goto _test_eof
-	_test_eof136:
-		cs = 136
-		goto _test_eof
-	_test_eof137:
-		cs = 137
-		goto _test_eof
-	_test_eof138:
-		cs = 138
-		goto _test_eof
-	_test_eof139:
-		cs = 139
-		goto _test_eof
-	_test_eof140:
-		cs = 140
-		goto _test_eof
-	_test_eof141:
-		cs = 141
-		goto _test_eof
-	_test_eof142:
-		cs = 142
-		goto _test_eof
-	_test_eof143:
-		cs = 143
-		goto _test_eof
-	_test_eof144:
-		cs = 144
-		goto _test_eof
-	_test_eof145:
-		cs = 145
-		goto _test_eof
-	_test_eof146:
-		cs = 146
-		goto _test_eof
-	_test_eof147:
-		cs = 147
-		goto _test_eof
-	_test_eof148:
-		cs = 148
-		goto _test_eof
-	_test_eof149:
-		cs = 149
-		goto _test_eof
-	_test_eof150:
-		cs = 150
-		goto _test_eof
-	_test_eof151:
-		cs = 151
-		goto _test_eof
-	_test_eof152:
-		cs = 152
-		goto _test_eof
-	_test_eof153:
-		cs = 153
-		goto _test_eof
-	_test_eof154:
-		cs = 154
-		goto _test_eof
-	_test_eof155:
-		cs = 155
-		goto _test_eof
-	_test_eof156:
-		cs = 156
-		goto _test_eof
-	_test_eof157:
-		cs = 157
-		goto _test_eof
-	_test_eof158:
-		cs = 158
-		goto _test_eof
-	_test_eof159:
-		cs = 159
-		goto _test_eof
-	_test_eof160:
-		cs = 160
-		goto _test_eof
-	_test_eof161:
-		cs = 161
-		goto _test_eof
+	_test_eof46: cs = 46; goto _test_eof
+	_test_eof47: cs = 47; goto _test_eof
+	_test_eof48: cs = 48; goto _test_eof
+	_test_eof1: cs = 1; goto _test_eof
+	_test_eof2: cs = 2; goto _test_eof
+	_test_eof49: cs = 49; goto _test_eof
+	_test_eof50: cs = 50; goto _test_eof
+	_test_eof51: cs = 51; goto _test_eof
+	_test_eof52: cs = 52; goto _test_eof
+	_test_eof3: cs = 3; goto _test_eof
+	_test_eof53: cs = 53; goto _test_eof
+	_test_eof54: cs = 54; goto _test_eof
+	_test_eof55: cs = 55; goto _test_eof
+	_test_eof56: cs = 56; goto _test_eof
+	_test_eof57: cs = 57; goto _test_eof
+	_test_eof4: cs = 4; goto _test_eof
+	_test_eof5: cs = 5; goto _test_eof
+	_test_eof58: cs = 58; goto _test_eof
+	_test_eof6: cs = 6; goto _test_eof
+	_test_eof7: cs = 7; goto _test_eof
+	_test_eof59: cs = 59; goto _test_eof
+	_test_eof60: cs = 60; goto _test_eof
+	_test_eof61: cs = 61; goto _test_eof
+	_test_eof62: cs = 62; goto _test_eof
+	_test_eof63: cs = 63; goto _test_eof
+	_test_eof64: cs = 64; goto _test_eof
+	_test_eof65: cs = 65; goto _test_eof
+	_test_eof66: cs = 66; goto _test_eof
+	_test_eof67: cs = 67; goto _test_eof
+	_test_eof68: cs = 68; goto _test_eof
+	_test_eof69: cs = 69; goto _test_eof
+	_test_eof70: cs = 70; goto _test_eof
+	_test_eof71: cs = 71; goto _test_eof
+	_test_eof72: cs = 72; goto _test_eof
+	_test_eof73: cs = 73; goto _test_eof
+	_test_eof74: cs = 74; goto _test_eof
+	_test_eof75: cs = 75; goto _test_eof
+	_test_eof76: cs = 76; goto _test_eof
+	_test_eof77: cs = 77; goto _test_eof
+	_test_eof78: cs = 78; goto _test_eof
+	_test_eof79: cs = 79; goto _test_eof
+	_test_eof80: cs = 80; goto _test_eof
+	_test_eof81: cs = 81; goto _test_eof
+	_test_eof82: cs = 82; goto _test_eof
+	_test_eof83: cs = 83; goto _test_eof
+	_test_eof84: cs = 84; goto _test_eof
+	_test_eof8: cs = 8; goto _test_eof
+	_test_eof9: cs = 9; goto _test_eof
+	_test_eof10: cs = 10; goto _test_eof
+	_test_eof11: cs = 11; goto _test_eof
+	_test_eof12: cs = 12; goto _test_eof
+	_test_eof13: cs = 13; goto _test_eof
+	_test_eof14: cs = 14; goto _test_eof
+	_test_eof15: cs = 15; goto _test_eof
+	_test_eof16: cs = 16; goto _test_eof
+	_test_eof17: cs = 17; goto _test_eof
+	_test_eof18: cs = 18; goto _test_eof
+	_test_eof19: cs = 19; goto _test_eof
+	_test_eof20: cs = 20; goto _test_eof
+	_test_eof21: cs = 21; goto _test_eof
+	_test_eof22: cs = 22; goto _test_eof
+	_test_eof85: cs = 85; goto _test_eof
+	_test_eof23: cs = 23; goto _test_eof
+	_test_eof86: cs = 86; goto _test_eof
+	_test_eof87: cs = 87; goto _test_eof
+	_test_eof24: cs = 24; goto _test_eof
+	_test_eof25: cs = 25; goto _test_eof
+	_test_eof26: cs = 26; goto _test_eof
+	_test_eof27: cs = 27; goto _test_eof
+	_test_eof28: cs = 28; goto _test_eof
+	_test_eof29: cs = 29; goto _test_eof
+	_test_eof30: cs = 30; goto _test_eof
+	_test_eof31: cs = 31; goto _test_eof
+	_test_eof32: cs = 32; goto _test_eof
+	_test_eof33: cs = 33; goto _test_eof
+	_test_eof88: cs = 88; goto _test_eof
+	_test_eof34: cs = 34; goto _test_eof
+	_test_eof35: cs = 35; goto _test_eof
+	_test_eof89: cs = 89; goto _test_eof
+	_test_eof90: cs = 90; goto _test_eof
+	_test_eof36: cs = 36; goto _test_eof
+	_test_eof91: cs = 91; goto _test_eof
+	_test_eof92: cs = 92; goto _test_eof
+	_test_eof93: cs = 93; goto _test_eof
+	_test_eof94: cs = 94; goto _test_eof
+	_test_eof95: cs = 95; goto _test_eof
+	_test_eof96: cs = 96; goto _test_eof
+	_test_eof97: cs = 97; goto _test_eof
+	_test_eof98: cs = 98; goto _test_eof
+	_test_eof37: cs = 37; goto _test_eof
+	_test_eof38: cs = 38; goto _test_eof
+	_test_eof99: cs = 99; goto _test_eof
+	_test_eof100: cs = 100; goto _test_eof
+	_test_eof101: cs = 101; goto _test_eof
+	_test_eof102: cs = 102; goto _test_eof
+	_test_eof103: cs = 103; goto _test_eof
+	_test_eof104: cs = 104; goto _test_eof
+	_test_eof105: cs = 105; goto _test_eof
+	_test_eof106: cs = 106; goto _test_eof
+	_test_eof107: cs = 107; goto _test_eof
+	_test_eof108: cs = 108; goto _test_eof
+	_test_eof109: cs = 109; goto _test_eof
+	_test_eof39: cs = 39; goto _test_eof
+	_test_eof40: cs = 40; goto _test_eof
+	_test_eof41: cs = 41; goto _test_eof
+	_test_eof110: cs = 110; goto _test_eof
+	_test_eof111: cs = 111; goto _test_eof
+	_test_eof112: cs = 112; goto _test_eof
+	_test_eof113: cs = 113; goto _test_eof
+	_test_eof114: cs = 114; goto _test_eof
+	_test_eof115: cs = 115; goto _test_eof
+	_test_eof116: cs = 116; goto _test_eof
+	_test_eof42: cs = 42; goto _test_eof
+	_test_eof117: cs = 117; goto _test_eof
+	_test_eof118: cs = 118; goto _test_eof
+	_test_eof119: cs = 119; goto _test_eof
+	_test_eof120: cs = 120; goto _test_eof
+	_test_eof121: cs = 121; goto _test_eof
+	_test_eof122: cs = 122; goto _test_eof
+	_test_eof123: cs = 123; goto _test_eof
+	_test_eof124: cs = 124; goto _test_eof
+	_test_eof125: cs = 125; goto _test_eof
+	_test_eof126: cs = 126; goto _test_eof
+	_test_eof127: cs = 127; goto _test_eof
+	_test_eof128: cs = 128; goto _test_eof
+	_test_eof129: cs = 129; goto _test_eof
+	_test_eof130: cs = 130; goto _test_eof
+	_test_eof131: cs = 131; goto _test_eof
+	_test_eof132: cs = 132; goto _test_eof
+	_test_eof133: cs = 133; goto _test_eof
+	_test_eof134: cs = 134; goto _test_eof
+	_test_eof135: cs = 135; goto _test_eof
+	_test_eof43: cs = 43; goto _test_eof
+	_test_eof44: cs = 44; goto _test_eof
+	_test_eof136: cs = 136; goto _test_eof
+	_test_eof137: cs = 137; goto _test_eof
+	_test_eof138: cs = 138; goto _test_eof
+	_test_eof139: cs = 139; goto _test_eof
+	_test_eof140: cs = 140; goto _test_eof
+	_test_eof141: cs = 141; goto _test_eof
+	_test_eof142: cs = 142; goto _test_eof
+	_test_eof143: cs = 143; goto _test_eof
+	_test_eof144: cs = 144; goto _test_eof
+	_test_eof145: cs = 145; goto _test_eof
+	_test_eof146: cs = 146; goto _test_eof
+	_test_eof147: cs = 147; goto _test_eof
+	_test_eof148: cs = 148; goto _test_eof
+	_test_eof149: cs = 149; goto _test_eof
+	_test_eof150: cs = 150; goto _test_eof
+	_test_eof151: cs = 151; goto _test_eof
+	_test_eof152: cs = 152; goto _test_eof
+	_test_eof153: cs = 153; goto _test_eof
+	_test_eof154: cs = 154; goto _test_eof
+	_test_eof155: cs = 155; goto _test_eof
+	_test_eof156: cs = 156; goto _test_eof
+	_test_eof157: cs = 157; goto _test_eof
+	_test_eof158: cs = 158; goto _test_eof
+	_test_eof159: cs = 159; goto _test_eof
+	_test_eof160: cs = 160; goto _test_eof
+	_test_eof161: cs = 161; goto _test_eof
 
-	_test_eof:
-		{
-		}
-		if p == eof {
-			switch cs {
-			case 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 68, 69, 74, 75, 80, 81, 82, 83, 84, 86, 87, 88, 89, 91, 92, 93, 98, 99, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 124, 125, 126, 127, 128, 129, 130, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 149, 150, 151, 152, 153, 154, 155, 157, 158, 159, 160, 161:
+	_test_eof: {}
+	if p == eof {
+		switch cs {
+		case 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 68, 69, 74, 75, 80, 81, 82, 83, 84, 86, 87, 88, 89, 91, 92, 93, 98, 99, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 124, 125, 126, 127, 128, 129, 130, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 149, 150, 151, 152, 153, 154, 155, 157, 158, 159, 160, 161:
 //line parser.rl:13
 
-				if port_mark > host_mark {
-					u.Port = data[port_mark:p]
-				}
-
-			case 147:
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+		case 147:
 //line parser.rl:19
 
-				u.Protocol = data[0 : p-1]
-
-			case 46, 85, 90, 146:
+    u.Protocol = data[0:p-1]
+  
+		case 46, 85, 90, 146:
 //line parser.rl:27
 
-				u.Host = data[host_mark:p]
-
-			case 52:
+    u.Host = data[host_mark:p]
+  
+		case 52:
 //line parser.rl:31
 
-				if u.Query == "" {
-					u.Query = data[mark:p]
-				}
-
-			case 49, 50, 67, 144:
+    if u.Query == "" {
+      u.Query = data[mark:p]
+    }
+  
+		case 49, 50, 67, 144:
 //line parser.rl:37
 
-				if u.Path == "" {
-					u.Path = data[mark:p]
-				}
-
-			case 48:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+		case 48:
 //line parser.rl:43
 
-				u.Fragment = data[mark:p]
-
-			case 51:
+    u.Fragment = data[mark:p]
+  
+		case 51:
 //line parser.rl:10
-				mark = p
+ mark = p 
 //line parser.rl:31
 
-				if u.Query == "" {
-					u.Query = data[mark:p]
-				}
-
-			case 47:
+    if u.Query == "" {
+      u.Query = data[mark:p]
+    }
+  
+		case 47:
 //line parser.rl:10
-				mark = p
+ mark = p 
 //line parser.rl:43
 
-				u.Fragment = data[mark:p]
-
-			case 60, 64, 65, 66, 70, 71, 72, 73, 76, 77, 78, 79, 100, 101, 102, 103:
+    u.Fragment = data[mark:p]
+  
+		case 60, 64, 65, 66, 70, 71, 72, 73, 76, 77, 78, 79, 100, 101, 102, 103:
 //line parser.rl:13
 
-				if port_mark > host_mark {
-					u.Port = data[port_mark:p]
-				}
-
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
 //line parser.rl:37
 
-				if u.Path == "" {
-					u.Path = data[mark:p]
-				}
-
-			case 94, 95, 96, 97, 104, 123, 131, 148, 156:
+    if u.Path == "" {
+      u.Path = data[mark:p]
+    }
+  
+		case 94, 95, 96, 97, 104, 123, 131, 148, 156:
 //line parser.rl:27
 
-				u.Host = data[host_mark:p]
-
+    u.Host = data[host_mark:p]
+  
 //line parser.rl:13
 
-				if port_mark > host_mark {
-					u.Port = data[port_mark:p]
-				}
-
-//line parser.go:8536
-			}
+    if port_mark > host_mark{
+      u.Port = data[port_mark:p]
+    }
+  
+//line parser.go:8512
 		}
+	}
 
-	_out:
-		{
-		}
+	_out: {}
 	}
 
 //line parser.rl:116
-	if cs < url_parser_first_final {
-		return nil, fmt.Errorf("Failed to match URL")
-	} else {
-		return u, nil
-	}
+  if cs < url_parser_first_final {
+    return nil, fmt.Errorf("Failed to match URL")
+  } else {
+    return u, nil
+  }
 }
+

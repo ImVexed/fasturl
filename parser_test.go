@@ -184,4 +184,15 @@ func TestParseURL(t *testing.T) {
 		assert.Equal(t, "example.com", url.Host)
 		assert.Equal(t, "foo=bar", url.Query)
 	})
+
+	t.Run("Query with path characters", func(t *testing.T) {
+		url, err := ParseURL("https://example.com/resource?key=alpha/beta?mode=full#section")
+
+		require.NoError(t, err)
+		assert.Equal(t, "https", url.Protocol)
+		assert.Equal(t, "example.com", url.Host)
+		assert.Equal(t, "/resource", url.Path)
+		assert.Equal(t, "key=alpha/beta?mode=full", url.Query)
+		assert.Equal(t, "section", url.Fragment)
+	})
 }
